@@ -1,4 +1,4 @@
-# metal-metalPlayground
+# metal-neo4j
 
 My awesome Metal.js project
 
