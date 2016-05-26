@@ -1,0 +1,26 @@
+a.control-menu-icon {
+  text-decoration: none;
+}
+
+body.open {
+  padding-left: 320px;
+  overflow: hidden;
+}
+
+html, body {
+    height: 100%;
+}
+
+.navbar {
+  margin-bottom: 14px;
+}
+
+.card-inline {
+  width: 300px;
+  display: inline-flex;
+  margin-right: 24px;
+}
+
+.row {
+  padding-bottom: 24px;
+}

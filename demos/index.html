@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Demo: Neo4j</title>
+
+		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+	  <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="http://liferay.github.io/lexicon/js/side-navigation.js"></script>
+		<link rel="stylesheet" type="text/css" href="http://liferay.github.io/lexicon/css/atlas-font-awesome.css">
+
+		<link rel="stylesheet" type="text/css" href="../node_modules/posterjs/build/poster.css">
+    <script type="text/javascript" src="../node_modules/posterjs/build/poster.js"></script>
+		<script type="text/javascript" src="../node_modules/neo4j-driver/lib/browser/neo4j-web.min.js"></script>
+
+		<link rel="stylesheet" href="../build/metalNeo4j.css">
+
+		<script src="../build/globals/metalNeo4j.js"></script>
+	</head>
+
+	<body>
+		<div id="content"></div>
+
+    <script type="text/javascript">
+			new metal.MetalNeo4j({
+				element: '#content'
+			});
+    </script>
+	</body>
+</html>

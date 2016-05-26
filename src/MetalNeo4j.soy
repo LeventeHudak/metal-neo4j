@@ -1,0 +1,133 @@
+{namespace MetalNeo4j}
+
+/**
+ * This renders the component's whole content.
+ * @param commands
+ * @param onSubmitEventHandler
+ * @param records
+ */
+{template .render}
+	<nav class="collapse-basic-search navbar navbar-default navbar-no-collapse" id="navbarId">
+		<ul class="nav navbar-nav">
+				<li>
+					<a class="control-menu-icon">
+						<img height="26" src="https://avatars3.githubusercontent.com/u/201120?v=3&s=200"></img>
+					</a>
+				</li>
+				<li class="active"><a href="#">Metal Neo4j</a></li>
+		</ul>
+
+		<form class="basic-search input-group">
+				<div class="input-group-input">
+						<div class="basic-search-slider">
+								<button class="basic-search-close btn btn-default" type="button"><span class="icon-remove"></span></button>
+								<input class="form-control" placeholder=" Search..." type="text" />
+						</div>
+				</div>
+				<div class="input-group-btn">
+						<button class="btn btn-default" type="submit"><span class="icon-search"></span></button>
+				</div>
+		</form>
+	</nav>
+
+	<div class="section">
+		<div class="container-fluid">
+			<div id="errorId"></div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<form data-onsubmit="{$onSubmitEventHandler}">
+						<div class="input-group-default input-group-lg">
+							<span class="input-group-addon">$</span>
+							<input aria-label="Query" class="form-control" placeholder="Cypher query..." type="text">
+						</div>
+					</form>
+				</div>
+			</div>
+
+			{if length($commands) > 0}
+				<div class="panel panel-default">
+					<div class="panel-heading" id="headingOne" role="tab">
+		        <div class="panel-title">
+	            <a aria-controls="collapseOne" aria-expanded="true" data-toggle="collapse" href="#collapseOne" role="button">
+	                Commands
+	            </a>
+		        </div>
+	        </div>
+
+					<div aria-labelledby="headingOne" class="panel-collapse collapse in" id="collapseOne" role="tabpanel">
+						<div class="panel-body">
+							<div class="row" id="rowCollapse1">
+								<div class="col-md-12">
+									<div class="timeline">
+										{foreach $command in $commands}
+											<div class="timeline-item">
+												<div class="panel panel-default">
+													<div class="panel-body">
+														<div class="timeline-increment-icon">
+															<span class="timeline-icon"></span>
+														</div>
+
+														{$command}
+													</div>
+												</div>
+											</div>
+										{/foreach}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			{/if}
+
+			{if length($records) > 0}
+				<div class="panel panel-default">
+					<div class="panel-heading" id="headingTwo" role="tab">
+						<div class="panel-title">
+							<a aria-controls="collapseTwo" aria-expanded="true" data-toggle="collapse" href="#collapseTwo" role="button">
+									Records
+							</a>
+						</div>
+					</div>
+
+					<div aria-labelledby="headingTwo" class="panel-collapse collapse in" id="collapseTwo" role="tabpanel">
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-12">
+									<div id="queryResultId">
+										{foreach $record in $records}
+											{call .renderCard}
+												{param record: $record /}
+											 	{param currentIndex: index($record) /}
+											{/call}
+										{/foreach}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			{/if}
+		</div>
+	</div>
+{/template}
+
+/**
+ * This renders the component's whole content.
+ * @param record
+ * @param currentIndex
+ */
+{template .renderCard}
+	<div class="card card-horizontal card-rounded card-inline bg-primary">
+		<div class="card-row card-row-valign-top">
+			<div class="card-col-content card-col-gutters">
+				<h4>Record {$currentIndex}</h4>
+				<div class="divider"></div>
+				{foreach $key in $record.keys}
+					<p>{$key} = {$record._fields[index($key)]}</p>
+				{/foreach}
+			</div>
+		</div>
+	</div>
+{/template}
