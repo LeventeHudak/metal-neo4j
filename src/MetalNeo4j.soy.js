@@ -56,8 +56,18 @@ function $render(opt_data, opt_ignored, opt_ijData) {
       ie_open('li', null, null,
           'class', 'active');
         ie_open('a', null, null,
+            'class', 'control-menu-icon',
             'href', '#');
           itext('Metal Neo4j');
+        ie_close('a');
+      ie_close('li');
+      ie_open('li');
+        ie_open('a', null, null,
+            'class', 'control-menu-icon',
+            'data-onclick', opt_data.onInitalizeGraphEventHandler,
+            'href', '#');
+          ie_void('span', null, null,
+              'class', 'icon-download-alt');
         ie_close('a');
       ie_close('li');
     ie_close('ul');
@@ -119,6 +129,50 @@ function $render(opt_data, opt_ignored, opt_ijData) {
           ie_close('form');
         ie_close('div');
       ie_close('div');
+      ie_open('div', null, null,
+          'class', 'row');
+        ie_open('div', null, null,
+            'class', 'col-md-4 flex-container');
+          var labelList13 = opt_data.labels;
+          var labelListLen13 = labelList13.length;
+          for (var labelIndex13 = 0; labelIndex13 < labelListLen13; labelIndex13++) {
+            var labelData13 = labelList13[labelIndex13];
+            ie_open('div', null, null,
+                'class', 'text-info bg-default drag-drop-item box',
+                'data-labelname', labelData13);
+              itext((goog.asserts.assert((labelData13) != null), labelData13));
+            ie_close('div');
+          }
+        ie_close('div');
+        ie_open('div', null, null,
+            'class', 'col-md-4 flex-container');
+          var relationList21 = opt_data.relations;
+          var relationListLen21 = relationList21.length;
+          for (var relationIndex21 = 0; relationIndex21 < relationListLen21; relationIndex21++) {
+            var relationData21 = relationList21[relationIndex21];
+            ie_open('div', null, null,
+                'class', 'text-info bg-default drag-drop-item box',
+                'data-labelname', relationData21);
+              itext((goog.asserts.assert((relationData21) != null), relationData21));
+            ie_close('div');
+          }
+        ie_close('div');
+        ie_open('div', null, null,
+            'class', 'col-md-4 flex-container');
+          var keyList29 = opt_data.keys;
+          var keyListLen29 = keyList29.length;
+          for (var keyIndex29 = 0; keyIndex29 < keyListLen29; keyIndex29++) {
+            var keyData29 = keyList29[keyIndex29];
+            ie_open('div', null, null,
+                'class', 'text-info bg-default drag-drop-item box',
+                'data-labelname', keyData29);
+              itext((goog.asserts.assert((keyData29) != null), keyData29));
+            ie_close('div');
+          }
+        ie_close('div');
+      ie_close('div');
+      ie_void('div', null, null,
+          'class', 'row drag-drop-target');
       if (opt_data.commands.length > 0) {
         ie_open('div', null, null,
             'class', 'panel panel-default');
@@ -152,10 +206,10 @@ function $render(opt_data, opt_ignored, opt_ijData) {
                     'class', 'col-md-12');
                   ie_open('div', null, null,
                       'class', 'timeline');
-                    var commandList12 = opt_data.commands;
-                    var commandListLen12 = commandList12.length;
-                    for (var commandIndex12 = 0; commandIndex12 < commandListLen12; commandIndex12++) {
-                      var commandData12 = commandList12[commandIndex12];
+                    var commandList38 = opt_data.commands;
+                    var commandListLen38 = commandList38.length;
+                    for (var commandIndex38 = 0; commandIndex38 < commandListLen38; commandIndex38++) {
+                      var commandData38 = commandList38[commandIndex38];
                       ie_open('div', null, null,
                           'class', 'timeline-item');
                         ie_open('div', null, null,
@@ -167,55 +221,10 @@ function $render(opt_data, opt_ignored, opt_ijData) {
                               ie_void('span', null, null,
                                   'class', 'timeline-icon');
                             ie_close('div');
-                            itext((goog.asserts.assert((commandData12) != null), commandData12));
+                            itext((goog.asserts.assert((commandData38) != null), commandData38));
                           ie_close('div');
                         ie_close('div');
                       ie_close('div');
-                    }
-                  ie_close('div');
-                ie_close('div');
-              ie_close('div');
-            ie_close('div');
-          ie_close('div');
-        ie_close('div');
-      }
-      if (opt_data.records.length > 0) {
-        ie_open('div', null, null,
-            'class', 'panel panel-default');
-          ie_open('div', null, null,
-              'class', 'panel-heading',
-              'id', 'headingTwo',
-              'role', 'tab');
-            ie_open('div', null, null,
-                'class', 'panel-title');
-              ie_open('a', null, null,
-                  'aria-controls', 'collapseTwo',
-                  'aria-expanded', 'true',
-                  'data-toggle', 'collapse',
-                  'href', '#collapseTwo',
-                  'role', 'button');
-                itext('Records');
-              ie_close('a');
-            ie_close('div');
-          ie_close('div');
-          ie_open('div', null, null,
-              'aria-labelledby', 'headingTwo',
-              'class', 'panel-collapse collapse in',
-              'id', 'collapseTwo',
-              'role', 'tabpanel');
-            ie_open('div', null, null,
-                'class', 'panel-body');
-              ie_open('div', null, null,
-                  'class', 'row');
-                ie_open('div', null, null,
-                    'class', 'col-md-12');
-                  ie_open('div', null, null,
-                      'id', 'queryResultId');
-                    var recordList21 = opt_data.records;
-                    var recordListLen21 = recordList21.length;
-                    for (var recordIndex21 = 0; recordIndex21 < recordListLen21; recordIndex21++) {
-                      var recordData21 = recordList21[recordIndex21];
-                      $renderCard({record: recordData21, currentIndex: recordIndex21}, null, opt_ijData);
                     }
                   ie_close('div');
                 ie_close('div');
@@ -232,50 +241,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'MetalNeo4j.render';
 }
 
-
-/**
- * @param {Object<string, *>=} opt_data
- * @param {(null|undefined)=} opt_ignored
- * @param {Object<string, *>=} opt_ijData
- * @return {void}
- * @suppress {checkTypes}
- */
-function $renderCard(opt_data, opt_ignored, opt_ijData) {
-  ie_open('div', null, null,
-      'class', 'card card-horizontal card-rounded card-inline bg-primary');
-    ie_open('div', null, null,
-        'class', 'card-row card-row-valign-top');
-      ie_open('div', null, null,
-          'class', 'card-col-content card-col-gutters');
-        ie_open('h4');
-          itext('Record ');
-          itext((goog.asserts.assert((opt_data.currentIndex) != null), opt_data.currentIndex));
-        ie_close('h4');
-        ie_void('div', null, null,
-            'class', 'divider');
-        var keyList34 = opt_data.record.keys;
-        var keyListLen34 = keyList34.length;
-        for (var keyIndex34 = 0; keyIndex34 < keyListLen34; keyIndex34++) {
-          var keyData34 = keyList34[keyIndex34];
-          ie_open('p');
-            itext((goog.asserts.assert((keyData34) != null), keyData34));
-            itext(' = ');
-            itext((goog.asserts.assert((opt_data.record._fields[keyIndex34]) != null), opt_data.record._fields[keyIndex34]));
-          ie_close('p');
-        }
-      ie_close('div');
-    ie_close('div');
-  ie_close('div');
-}
-exports.renderCard = $renderCard;
-if (goog.DEBUG) {
-  $renderCard.soyTemplateName = 'MetalNeo4j.renderCard';
-}
-
-exports.render.params = ["commands","onSubmitEventHandler","records"];
-exports.render.types = {"commands":"any","onSubmitEventHandler":"any","records":"any"};
-exports.renderCard.params = ["record","currentIndex"];
-exports.renderCard.types = {"record":"any","currentIndex":"any"};
+exports.render.params = ["commands","keys","labels","onInitalizeGraphEventHandler","onSubmitEventHandler","relations"];
+exports.render.types = {"commands":"any","keys":"any","labels":"any","onInitalizeGraphEventHandler":"any","onSubmitEventHandler":"any","relations":"any"};
 templates = exports;
 return exports;
 

@@ -23,7 +23,9 @@
 	],
 	"dependencies": {
 		"metal-component": "^1.0.0-rc.11",
-		"metal-soy": "^1.0.0-rc.11"
+		"metal-drag-drop": "^1.0.0-rc.2",
+		"metal-soy": "^1.0.0-rc.11",
+		"vis": "^4.16.1"
 	},
 	"devDependencies": {
 		"gulp": "^3.8.11",
