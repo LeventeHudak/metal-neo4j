@@ -15,12 +15,6 @@ html, body {
   margin-bottom: 14px;
 }
 
-.card-inline {
-  width: 300px;
-  display: inline-flex;
-  margin-right: 24px;
-}
-
 .row {
   padding-bottom: 24px;
 }
@@ -36,11 +30,11 @@ html, body {
 }
 
 .drag-drop-target {
-  height: 400px;
-  background-color: aquamarine;
+  height: 600px;
+  background-color: #276FBF;
 }
 
 .query-element-drag {
   position: absolute;
-  background-color: honeydew;
+  background-color: #F6F4F3;
 }

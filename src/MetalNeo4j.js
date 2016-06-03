@@ -122,10 +122,13 @@ class MetalNeo4j extends Component {
     queryElementsDragDrop.on(metal.DragDrop.Events.END, (data, event) => this.handleQuery_(data, event));
 
     var draggedElementsDragDrop = new metal.DragDrop({
-			dragPlaceholder: metal.Drag.Placeholder.CLONE,
       constrain: '#dragDropTargetId',
 			handles: '.handle',
 			sources: '.query-element-drag',
+      steps: {
+				x: 5,
+				y: 5
+			},
 			targets: '.query-element-drag'
 		});
   }
@@ -170,19 +173,17 @@ class MetalNeo4j extends Component {
     let cardTitle = document.createElement('h3');
     cardTitle.innerText = label;
 
-    let cardContent = document.createElement('h5');
-    cardContent.innerText = 'test inner text h5';
-    let inputVagyok = this.createInputElementForName('test');
-    let pElement = document.createElement('p');
-    pElement.innerText = 'TEST P ELEMENT TEXT';
-
     cardHandle.appendChild(cardHandleIcon);
     cardDiv.appendChild(cardHandle);
     cardDiv.appendChild(cardRowDiv);
     cardRowDiv.appendChild(cardColContent);
     cardColContent.appendChild(cardTitle);
-    cardColContent.appendChild(inputVagyok);
-    cardColContent.appendChild(pElement);
+
+    for (let i = 0; i < properties.length; i++) {
+      let input = this.createInputElementForName(properties[i]);
+
+      cardColContent.appendChild(input);
+    }
 
     return cardDiv;
   }
