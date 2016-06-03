@@ -5,6 +5,7 @@ import Component from 'metal-component';
 import Soy from 'metal-soy';
 import alert from 'metal-alert';
 import DragDrop from 'metal-drag-drop';
+import dom from 'metal-dom';
 
 class MetalNeo4j extends Component {
   created() {
@@ -15,6 +16,14 @@ class MetalNeo4j extends Component {
 
     // Attaching vis.js to the instance
     this.vis_ = window.vis;
+
+    this.labelProperties_ = new Map();
+    this.relationProperties_ = [];
+  }
+
+  // Returns a promise
+  runQuery(queryString) {
+    return this.neo4jSession_.run(queryString);
   }
 
   disposed() {
@@ -22,7 +31,7 @@ class MetalNeo4j extends Component {
     this.neo4jDriver_.close();
   }
 
-  drawGraph() {
+  drawGraph(data) {
     // var nodes = new vis.DataSet([
     //     {id: 1, label: 'Node 1'},
     //     {id: 2, label: 'Node 2'},
@@ -54,7 +63,7 @@ class MetalNeo4j extends Component {
     let app = this;
 
     // Get all relation types
-    this.neo4jSession_.run('match ()-[r]-() return distinct type(r)').then(result => {
+    this.runQuery('match ()-[r]-() return distinct type(r)').then(result => {
       let relations = [];
 
       for (let i = 0; i < result.records.length; i++) {
@@ -64,19 +73,32 @@ class MetalNeo4j extends Component {
       app.relations = relations;
     }).catch( err => app.handleQueryError_(err) );
 
-    // Get all labels
-    this.neo4jSession_.run('match (n) return distinct labels(n)').then(result => {
+    // Get all labels and label properties
+    this.runQuery('match (n) return distinct labels(n)').then(result => {
       let labels = [];
 
       for (let i = 0; i < result.records.length; i++) {
-        labels.push(result.records[i]._fields[0][0]);
+        let label = result.records[i]._fields[0][0];
+        let labelProperties = new Set();
+
+        labels.push(label);
+
+        app.runQuery('match (n:' + label + ') return distinct keys(n)').then(result => {
+          for (let x = 0; x < result.records.length; x++) {
+            for (let y = 0; y < result.records[x]._fields[0].length; y++) {
+              labelProperties.add(result.records[x]._fields[0][y]);
+            }
+          }
+
+          app.labelProperties_.set(label, Array.from(labelProperties));
+        }).catch(err => app.handleQueryError_(err));
       }
 
       app.labels = labels;
     }).catch( err => app.handleQueryError_(err) );
 
     // Get all keys
-    this.neo4jSession_.run('match (n) return distinct keys(n)').then(result => {
+    this.runQuery('match (n) return distinct keys(n)').then(result => {
       let keys = new Set();
 
       for (let i = 0; i < result.records.length; i++) {
@@ -90,14 +112,79 @@ class MetalNeo4j extends Component {
       app.keys = keysArray;
     }).catch( err => app.handleQueryError_(err) );
 
-    var dragDrop = new metal.DragDrop({
+    var queryElementsDragDrop = new metal.DragDrop({
 			dragPlaceholder: metal.Drag.Placeholder.CLONE,
 			handles: '.drag-drop-item',
-			sources: '.box',
+			sources: '.drag-drop-item',
 			targets: '.drag-drop-target'
 		});
 
-		dragDrop.on(metal.DragDrop.Events.END, (data, event) => this.handleQuery_(data, event));
+    queryElementsDragDrop.on(metal.DragDrop.Events.END, (data, event) => this.handleQuery_(data, event));
+
+    var draggedElementsDragDrop = new metal.DragDrop({
+			dragPlaceholder: metal.Drag.Placeholder.CLONE,
+      constrain: '#dragDropTargetId',
+			handles: '.handle',
+			sources: '.query-element-drag',
+			targets: '.query-element-drag'
+		});
+  }
+
+  createInputElementForName(name) {
+    let inputDiv = document.createElement('div');
+    inputDiv.className = 'form-group';
+
+    let label = document.createElement('label');
+    label.innerText = name;
+
+    let input = document.createElement('input');
+    input.className = 'form-control';
+    input.type = 'text';
+    input.placeholder = name + '...';
+
+    inputDiv.appendChild(label);
+    inputDiv.appendChild(input);
+
+    return inputDiv;
+  }
+
+  createElementForLabel(label) {
+    let properties = this.labelProperties_.get(label);
+    console.log(properties);
+
+    let cardDiv = document.createElement('div');
+    cardDiv.className = 'card card-rounded query-element-drag';
+
+    let cardHandle = document.createElement('div');
+    cardHandle.className = 'handle';
+
+    let cardHandleIcon = document.createElement('span');
+    cardHandleIcon.className = 'icon-move';
+
+    let cardRowDiv = document.createElement('div');
+    cardRowDiv.className = 'card-row card-row-padded card-row-valign-top';
+
+    let cardColContent = document.createElement('div');
+    cardColContent.className = 'card-row card-row-padded card-row-valign-top';
+
+    let cardTitle = document.createElement('h3');
+    cardTitle.innerText = label;
+
+    let cardContent = document.createElement('h5');
+    cardContent.innerText = 'test inner text h5';
+    let inputVagyok = this.createInputElementForName('test');
+    let pElement = document.createElement('p');
+    pElement.innerText = 'TEST P ELEMENT TEXT';
+
+    cardHandle.appendChild(cardHandleIcon);
+    cardDiv.appendChild(cardHandle);
+    cardDiv.appendChild(cardRowDiv);
+    cardRowDiv.appendChild(cardColContent);
+    cardColContent.appendChild(cardTitle);
+    cardColContent.appendChild(inputVagyok);
+    cardColContent.appendChild(pElement);
+
+    return cardDiv;
   }
 
   handleQuery_(data, event) {
@@ -108,9 +195,10 @@ class MetalNeo4j extends Component {
 
     console.log('Hit target:', labelName);
 
-    this.neo4jSession_.run('match (n: ' + labelName + ') return n').then(result => {
-      console.log(result);
-    }).catch( err => app.handleQueryError_(err) );
+    let element = this.createElementForLabel(labelName);
+
+    let target = document.querySelector('#dragDropTargetId');
+    target.appendChild(element);
   }
 
   onSubmitEventHandler(event) {
@@ -118,13 +206,11 @@ class MetalNeo4j extends Component {
 
     let app = this;
 
-    app.neo4jSession_.run(event.target[0].value)
+    app.runQuery(event.target[0].value)
       .then( function(result)
       {
         app.records = result.records;
         app.commands.push(event.target[0].value);
-
-        console.log(result);
       })
       .catch( err => app.handleQueryError_(err) );
   }

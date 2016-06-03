@@ -29,7 +29,18 @@ html, body {
   margin: 3px;
 }
 
+.handle {
+  float: right;
+  height: 20px;
+  width: 20px;
+}
+
 .drag-drop-target {
-  height: 300px;
+  height: 400px;
   background-color: aquamarine;
+}
+
+.query-element-drag {
+  position: absolute;
+  background-color: honeydew;
 }

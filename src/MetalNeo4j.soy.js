@@ -138,7 +138,7 @@ function $render(opt_data, opt_ignored, opt_ijData) {
           for (var labelIndex13 = 0; labelIndex13 < labelListLen13; labelIndex13++) {
             var labelData13 = labelList13[labelIndex13];
             ie_open('div', null, null,
-                'class', 'text-info bg-default drag-drop-item box',
+                'class', 'text-info bg-default drag-drop-item',
                 'data-labelname', labelData13);
               itext((goog.asserts.assert((labelData13) != null), labelData13));
             ie_close('div');
@@ -151,7 +151,7 @@ function $render(opt_data, opt_ignored, opt_ijData) {
           for (var relationIndex21 = 0; relationIndex21 < relationListLen21; relationIndex21++) {
             var relationData21 = relationList21[relationIndex21];
             ie_open('div', null, null,
-                'class', 'text-info bg-default drag-drop-item box',
+                'class', 'text-info bg-default drag-drop-item',
                 'data-labelname', relationData21);
               itext((goog.asserts.assert((relationData21) != null), relationData21));
             ie_close('div');
@@ -164,7 +164,7 @@ function $render(opt_data, opt_ignored, opt_ijData) {
           for (var keyIndex29 = 0; keyIndex29 < keyListLen29; keyIndex29++) {
             var keyData29 = keyList29[keyIndex29];
             ie_open('div', null, null,
-                'class', 'text-info bg-default drag-drop-item box',
+                'class', 'text-info bg-default drag-drop-item',
                 'data-labelname', keyData29);
               itext((goog.asserts.assert((keyData29) != null), keyData29));
             ie_close('div');
@@ -172,6 +172,7 @@ function $render(opt_data, opt_ignored, opt_ijData) {
         ie_close('div');
       ie_close('div');
       ie_void('div', null, null,
+          'id', 'dragDropTargetId',
           'class', 'row drag-drop-target');
       if (opt_data.commands.length > 0) {
         ie_open('div', null, null,
