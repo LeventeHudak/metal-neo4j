@@ -111,7 +111,7 @@ class MetalNeo4j extends Component {
 			app.keys = keysArray;
 		}).catch(err => app.handleQueryError_(err));
 
-		new metal.DragDrop({
+		let queryElementsDragDrop = new metal.DragDrop({
 			dragPlaceholder: metal.Drag.Placeholder.CLONE,
 			handles: '.drag-drop-item',
 			sources: '.drag-drop-item',
