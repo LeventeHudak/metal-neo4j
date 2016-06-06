@@ -110,130 +110,59 @@ function $render(opt_data, opt_ignored, opt_ijData) {
       ie_open('div', null, null,
           'class', 'row');
         ie_open('div', null, null,
-            'class', 'col-md-12');
-          ie_open('form', null, null,
-              'data-onsubmit', opt_data.onSubmitEventHandler);
-            ie_open('div', null, null,
-                'class', 'input-group-default input-group-lg');
-              ie_open('span', null, null,
-                  'class', 'input-group-addon');
-                itext('$');
-              ie_close('span');
-              ie_open('input', null, null,
-                  'aria-label', 'Query',
-                  'class', 'form-control',
-                  'placeholder', 'Cypher query...',
-                  'type', 'text');
-              ie_close('input');
-            ie_close('div');
-          ie_close('form');
-        ie_close('div');
-      ie_close('div');
-      ie_open('div', null, null,
-          'class', 'row');
-        ie_open('div', null, null,
             'class', 'col-md-4 flex-container');
-          var labelList13 = opt_data.labels;
-          var labelListLen13 = labelList13.length;
-          for (var labelIndex13 = 0; labelIndex13 < labelListLen13; labelIndex13++) {
-            var labelData13 = labelList13[labelIndex13];
+          var labelList11 = opt_data.labels;
+          var labelListLen11 = labelList11.length;
+          for (var labelIndex11 = 0; labelIndex11 < labelListLen11; labelIndex11++) {
+            var labelData11 = labelList11[labelIndex11];
             ie_open('div', null, null,
                 'class', 'text-info bg-default drag-drop-item',
-                'data-labelname', labelData13);
-              itext((goog.asserts.assert((labelData13) != null), labelData13));
+                'data-labelname', labelData11);
+              itext((goog.asserts.assert((labelData11) != null), labelData11));
             ie_close('div');
           }
         ie_close('div');
         ie_open('div', null, null,
             'class', 'col-md-4 flex-container');
-          var relationList21 = opt_data.relations;
-          var relationListLen21 = relationList21.length;
-          for (var relationIndex21 = 0; relationIndex21 < relationListLen21; relationIndex21++) {
-            var relationData21 = relationList21[relationIndex21];
+          var relationList19 = opt_data.relations;
+          var relationListLen19 = relationList19.length;
+          for (var relationIndex19 = 0; relationIndex19 < relationListLen19; relationIndex19++) {
+            var relationData19 = relationList19[relationIndex19];
             ie_open('div', null, null,
                 'class', 'text-info bg-default drag-drop-item',
-                'data-labelname', relationData21);
-              itext((goog.asserts.assert((relationData21) != null), relationData21));
+                'data-labelname', relationData19);
+              itext((goog.asserts.assert((relationData19) != null), relationData19));
             ie_close('div');
           }
         ie_close('div');
         ie_open('div', null, null,
             'class', 'col-md-4 flex-container');
-          var keyList29 = opt_data.keys;
-          var keyListLen29 = keyList29.length;
-          for (var keyIndex29 = 0; keyIndex29 < keyListLen29; keyIndex29++) {
-            var keyData29 = keyList29[keyIndex29];
+          var keyList27 = opt_data.keys;
+          var keyListLen27 = keyList27.length;
+          for (var keyIndex27 = 0; keyIndex27 < keyListLen27; keyIndex27++) {
+            var keyData27 = keyList27[keyIndex27];
             ie_open('div', null, null,
                 'class', 'text-info bg-default drag-drop-item',
-                'data-labelname', keyData29);
-              itext((goog.asserts.assert((keyData29) != null), keyData29));
+                'data-labelname', keyData27);
+              itext((goog.asserts.assert((keyData27) != null), keyData27));
             ie_close('div');
           }
         ie_close('div');
       ie_close('div');
-      ie_void('div', null, null,
-          'id', 'dragDropTargetId',
-          'class', 'row drag-drop-target');
-      if (opt_data.commands.length > 0) {
+      ie_open('form', null, null,
+          'data-onsubmit', opt_data.onSubmitEventHandler,
+          'id', 'queryFormId');
         ie_open('div', null, null,
-            'class', 'panel panel-default');
-          ie_open('div', null, null,
-              'class', 'panel-heading',
-              'id', 'headingOne',
-              'role', 'tab');
-            ie_open('div', null, null,
-                'class', 'panel-title');
-              ie_open('a', null, null,
-                  'aria-controls', 'collapseOne',
-                  'aria-expanded', 'true',
-                  'data-toggle', 'collapse',
-                  'href', '#collapseOne',
-                  'role', 'button');
-                itext('Commands');
-              ie_close('a');
-            ie_close('div');
-          ie_close('div');
-          ie_open('div', null, null,
-              'aria-labelledby', 'headingOne',
-              'class', 'panel-collapse collapse in',
-              'id', 'collapseOne',
-              'role', 'tabpanel');
-            ie_open('div', null, null,
-                'class', 'panel-body');
-              ie_open('div', null, null,
-                  'class', 'row',
-                  'id', 'rowCollapse1');
-                ie_open('div', null, null,
-                    'class', 'col-md-12');
-                  ie_open('div', null, null,
-                      'class', 'timeline');
-                    var commandList38 = opt_data.commands;
-                    var commandListLen38 = commandList38.length;
-                    for (var commandIndex38 = 0; commandIndex38 < commandListLen38; commandIndex38++) {
-                      var commandData38 = commandList38[commandIndex38];
-                      ie_open('div', null, null,
-                          'class', 'timeline-item');
-                        ie_open('div', null, null,
-                            'class', 'panel panel-default');
-                          ie_open('div', null, null,
-                              'class', 'panel-body');
-                            ie_open('div', null, null,
-                                'class', 'timeline-increment-icon');
-                              ie_void('span', null, null,
-                                  'class', 'timeline-icon');
-                            ie_close('div');
-                            itext((goog.asserts.assert((commandData38) != null), commandData38));
-                          ie_close('div');
-                        ie_close('div');
-                      ie_close('div');
-                    }
-                  ie_close('div');
-                ie_close('div');
-              ie_close('div');
-            ie_close('div');
-          ie_close('div');
+            'id', 'dragDropTargetId',
+            'class', 'row drag-drop-target');
+          ie_open('a', null, null,
+              'data-onclick', opt_data.onSubmitEventHandler,
+              'href', '#');
+            ie_void('span', null, null,
+                'class', 'submit-btn icon-play');
+          ie_close('a');
         ie_close('div');
-      }
+      ie_close('form');
     ie_close('div');
   ie_close('div');
 }
@@ -242,8 +171,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'MetalNeo4j.render';
 }
 
-exports.render.params = ["commands","keys","labels","onInitalizeGraphEventHandler","onSubmitEventHandler","relations"];
-exports.render.types = {"commands":"any","keys":"any","labels":"any","onInitalizeGraphEventHandler":"any","onSubmitEventHandler":"any","relations":"any"};
+exports.render.params = ["keys","labels","onInitalizeGraphEventHandler","onSubmitEventHandler","relations"];
+exports.render.types = {"keys":"any","labels":"any","onInitalizeGraphEventHandler":"any","onSubmitEventHandler":"any","relations":"any"};
 templates = exports;
 return exports;
 

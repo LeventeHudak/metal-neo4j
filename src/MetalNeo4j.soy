@@ -2,7 +2,6 @@
 
 /**
  * This renders the component's whole content.
- * @param commands
  * @param keys
  * @param labels
  * @param onInitalizeGraphEventHandler
@@ -45,17 +44,6 @@
 			<div id="errorId"></div>
 
 			<div class="row">
-				<div class="col-md-12">
-					<form data-onsubmit="{$onSubmitEventHandler}">
-						<div class="input-group-default input-group-lg">
-							<span class="input-group-addon">$</span>
-							<input aria-label="Query" class="form-control" placeholder="Cypher query..." type="text">
-						</div>
-					</form>
-				</div>
-			</div>
-
-			<div class="row">
 				<div class="col-md-4 flex-container">
 					{foreach $label in $labels}
 						<div class="text-info bg-default drag-drop-item" data-labelname="{$label}">
@@ -79,92 +67,13 @@
 				</div>
 			</div>
 
-			<div id="dragDropTargetId" class="row drag-drop-target"></div>
-
-			// COMMANDS
-			{if length($commands) > 0}
-				<div class="panel panel-default">
-					<div class="panel-heading" id="headingOne" role="tab">
-		        <div class="panel-title">
-	            <a aria-controls="collapseOne" aria-expanded="true" data-toggle="collapse" href="#collapseOne" role="button">
-	                Commands
-	            </a>
-		        </div>
-	        </div>
-
-					<div aria-labelledby="headingOne" class="panel-collapse collapse in" id="collapseOne" role="tabpanel">
-						<div class="panel-body">
-							<div class="row" id="rowCollapse1">
-								<div class="col-md-12">
-									<div class="timeline">
-										{foreach $command in $commands}
-											<div class="timeline-item">
-												<div class="panel panel-default">
-													<div class="panel-body">
-														<div class="timeline-increment-icon">
-															<span class="timeline-icon"></span>
-														</div>
-
-														{$command}
-													</div>
-												</div>
-											</div>
-										{/foreach}
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+			<form data-onsubmit="{$onSubmitEventHandler}" id="queryFormId">
+				<div id="dragDropTargetId" class="row drag-drop-target">
+					<a data-onclick="{$onSubmitEventHandler}" href="#">
+						<span class="submit-btn icon-play"></span>
+					</a>
 				</div>
-			{/if}
-
-			// {if length($records) > 0}
-			// 	<div class="panel panel-default">
-			// 		<div class="panel-heading" id="headingTwo" role="tab">
-			// 			<div class="panel-title">
-			// 				<a aria-controls="collapseTwo" aria-expanded="true" data-toggle="collapse" href="#collapseTwo" role="button">
-			// 						Records
-			// 				</a>
-			// 			</div>
-			// 		</div>
-			//
-			// 		<div aria-labelledby="headingTwo" class="panel-collapse collapse in" id="collapseTwo" role="tabpanel">
-			// 			<div class="panel-body">
-			// 				<div class="row">
-			// 					<div class="col-md-12">
-			// 						<div id="queryResultId">
-			// 							{foreach $record in $records}
-			// 								{call .renderCard}
-			// 									{param record: $record /}
-			// 								 	{param currentIndex: index($record) /}
-			// 								{/call}
-			// 							{/foreach}
-			// 						</div>
-			// 					</div>
-			// 				</div>
-			// 			</div>
-			// 		</div>
-			// 	</div>
-			// {/if}
+			</form>
 		</div>
 	</div>
 {/template}
-
-// /**
-//  * This renders the component's whole content.
-//  * @param? record
-//  * @param? currentIndex
-//  */
-// {template .renderCard}
-// 	<div class="card card-horizontal card-rounded card-inline bg-primary">
-// 		<div class="card-row card-row-valign-top">
-// 			<div class="card-col-content card-col-gutters">
-// 				<h4>Record {$currentIndex}</h4>
-// 				<div class="divider"></div>
-// 				{foreach $key in $record.keys}
-// 					<p>{$key} = {$record._fields[index($key)]}</p>
-// 				{/foreach}
-// 			</div>
-// 		</div>
-// 	</div>
-// {/template}
