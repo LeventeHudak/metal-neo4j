@@ -4,6 +4,7 @@
  * This renders the component's whole content.
  * @param keys
  * @param labels
+ * @param onClearQueryBoardEventHandler
  * @param onInitalizeGraphEventHandler
  * @param onSubmitEventHandler
  * @param relations
@@ -21,7 +22,17 @@
 				</li>
 				<li>
 					<a class="control-menu-icon" data-onclick="{$onInitalizeGraphEventHandler}" href="#">
-						<span class="icon-download-alt"></span>
+						<span class="icon-tasks icon-large"></span>
+					</a>
+				</li>
+				<li>
+					<a class="control-menu-icon" data-onclick="{$onClearQueryBoardEventHandler}" href="#">
+						<span class="icon-refresh icon-large"></span>
+					</a>
+				</li>
+				<li>
+					<a data-onclick="{$onSubmitEventHandler}" href="#">
+						<span class="icon-bolt icon-large"></span>
 					</a>
 				</li>
 		</ul>
@@ -46,21 +57,21 @@
 			<div class="row">
 				<div class="col-md-4 flex-container">
 					{foreach $label in $labels}
-						<div class="text-info bg-default drag-drop-item" data-labelname="{$label}">
+						<div class="text-info bg-default drag-drop-item" data-label="{$label}">
 							{$label}
 						</div>
 					{/foreach}
 				</div>
 				<div class="col-md-4 flex-container">
 					{foreach $relation in $relations}
-						<div class="text-info bg-default drag-drop-item" data-labelname="{$relation}">
+						<div class="text-info bg-default drag-drop-item" data-label="{$relation}">
 							{$relation}
 						</div>
 					{/foreach}
 				</div>
 				<div class="col-md-4 flex-container">
 					{foreach $key in $keys}
-						<div class="text-info bg-default drag-drop-item" data-labelname="{$key}">
+						<div class="text-info bg-default drag-drop-item" data-label="{$key}">
 							{$key}
 						</div>
 					{/foreach}
@@ -68,11 +79,7 @@
 			</div>
 
 			<form data-onsubmit="{$onSubmitEventHandler}" id="queryFormId">
-				<div id="dragDropTargetId" class="row drag-drop-target">
-					<a data-onclick="{$onSubmitEventHandler}" href="#">
-						<span class="submit-btn icon-play"></span>
-					</a>
-				</div>
+				<div id="dragDropTargetId" class="row drag-drop-target"></div>
 			</form>
 		</div>
 	</div>

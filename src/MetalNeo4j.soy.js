@@ -67,7 +67,24 @@ function $render(opt_data, opt_ignored, opt_ijData) {
             'data-onclick', opt_data.onInitalizeGraphEventHandler,
             'href', '#');
           ie_void('span', null, null,
-              'class', 'icon-download-alt');
+              'class', 'icon-tasks icon-large');
+        ie_close('a');
+      ie_close('li');
+      ie_open('li');
+        ie_open('a', null, null,
+            'class', 'control-menu-icon',
+            'data-onclick', opt_data.onClearQueryBoardEventHandler,
+            'href', '#');
+          ie_void('span', null, null,
+              'class', 'icon-refresh icon-large');
+        ie_close('a');
+      ie_close('li');
+      ie_open('li');
+        ie_open('a', null, null,
+            'data-onclick', opt_data.onSubmitEventHandler,
+            'href', '#');
+          ie_void('span', null, null,
+              'class', 'icon-bolt icon-large');
         ie_close('a');
       ie_close('li');
     ie_close('ul');
@@ -111,40 +128,40 @@ function $render(opt_data, opt_ignored, opt_ijData) {
           'class', 'row');
         ie_open('div', null, null,
             'class', 'col-md-4 flex-container');
-          var labelList11 = opt_data.labels;
-          var labelListLen11 = labelList11.length;
-          for (var labelIndex11 = 0; labelIndex11 < labelListLen11; labelIndex11++) {
-            var labelData11 = labelList11[labelIndex11];
+          var labelList15 = opt_data.labels;
+          var labelListLen15 = labelList15.length;
+          for (var labelIndex15 = 0; labelIndex15 < labelListLen15; labelIndex15++) {
+            var labelData15 = labelList15[labelIndex15];
             ie_open('div', null, null,
                 'class', 'text-info bg-default drag-drop-item',
-                'data-labelname', labelData11);
-              itext((goog.asserts.assert((labelData11) != null), labelData11));
+                'data-label', labelData15);
+              itext((goog.asserts.assert((labelData15) != null), labelData15));
             ie_close('div');
           }
         ie_close('div');
         ie_open('div', null, null,
             'class', 'col-md-4 flex-container');
-          var relationList19 = opt_data.relations;
-          var relationListLen19 = relationList19.length;
-          for (var relationIndex19 = 0; relationIndex19 < relationListLen19; relationIndex19++) {
-            var relationData19 = relationList19[relationIndex19];
+          var relationList23 = opt_data.relations;
+          var relationListLen23 = relationList23.length;
+          for (var relationIndex23 = 0; relationIndex23 < relationListLen23; relationIndex23++) {
+            var relationData23 = relationList23[relationIndex23];
             ie_open('div', null, null,
                 'class', 'text-info bg-default drag-drop-item',
-                'data-labelname', relationData19);
-              itext((goog.asserts.assert((relationData19) != null), relationData19));
+                'data-label', relationData23);
+              itext((goog.asserts.assert((relationData23) != null), relationData23));
             ie_close('div');
           }
         ie_close('div');
         ie_open('div', null, null,
             'class', 'col-md-4 flex-container');
-          var keyList27 = opt_data.keys;
-          var keyListLen27 = keyList27.length;
-          for (var keyIndex27 = 0; keyIndex27 < keyListLen27; keyIndex27++) {
-            var keyData27 = keyList27[keyIndex27];
+          var keyList31 = opt_data.keys;
+          var keyListLen31 = keyList31.length;
+          for (var keyIndex31 = 0; keyIndex31 < keyListLen31; keyIndex31++) {
+            var keyData31 = keyList31[keyIndex31];
             ie_open('div', null, null,
                 'class', 'text-info bg-default drag-drop-item',
-                'data-labelname', keyData27);
-              itext((goog.asserts.assert((keyData27) != null), keyData27));
+                'data-label', keyData31);
+              itext((goog.asserts.assert((keyData31) != null), keyData31));
             ie_close('div');
           }
         ie_close('div');
@@ -152,16 +169,9 @@ function $render(opt_data, opt_ignored, opt_ijData) {
       ie_open('form', null, null,
           'data-onsubmit', opt_data.onSubmitEventHandler,
           'id', 'queryFormId');
-        ie_open('div', null, null,
+        ie_void('div', null, null,
             'id', 'dragDropTargetId',
             'class', 'row drag-drop-target');
-          ie_open('a', null, null,
-              'data-onclick', opt_data.onSubmitEventHandler,
-              'href', '#');
-            ie_void('span', null, null,
-                'class', 'submit-btn icon-play');
-          ie_close('a');
-        ie_close('div');
       ie_close('form');
     ie_close('div');
   ie_close('div');
@@ -171,8 +181,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'MetalNeo4j.render';
 }
 
-exports.render.params = ["keys","labels","onInitalizeGraphEventHandler","onSubmitEventHandler","relations"];
-exports.render.types = {"keys":"any","labels":"any","onInitalizeGraphEventHandler":"any","onSubmitEventHandler":"any","relations":"any"};
+exports.render.params = ["keys","labels","onClearQueryBoardEventHandler","onInitalizeGraphEventHandler","onSubmitEventHandler","relations"];
+exports.render.types = {"keys":"any","labels":"any","onClearQueryBoardEventHandler":"any","onInitalizeGraphEventHandler":"any","onSubmitEventHandler":"any","relations":"any"};
 templates = exports;
 return exports;
 

@@ -143,10 +143,10 @@ class MetalNeo4j extends Component {
 		input.type = 'text';
 		input.placeholder = property + '...';
 
-		let dataLabel = document.createAttribute('data-labelname');
+		let dataLabel = document.createAttribute('data-label');
 		dataLabel.value = labelName;
 
-		let dataProperty = document.createAttribute('data-propertyname');
+		let dataProperty = document.createAttribute('data-property');
 		dataProperty.value = property;
 
 		let dataOperator = document.createAttribute('data-operator');
@@ -197,12 +197,6 @@ class MetalNeo4j extends Component {
 
 		let modalElement = this.createLabelCriteriaSelectorElement(modalId, properties, label, cardRowDiv);
 		cardRowDiv.appendChild(modalElement);
-
-		// for (let i = 0; i < properties.length; i++) {
-		//   let input = this.createInputElementForProperty(properties[i], label);
-		//
-		//   cardRowDiv.appendChild(input);
-		// }
 
 		return cardDiv;
 	}
@@ -293,7 +287,7 @@ class MetalNeo4j extends Component {
 		event.preventDefault();
 
 		let item = data.source;
-		let labelName = item.getAttribute('data-labelname').toString();
+		let labelName = item.getAttribute('data-label');
 
 		if (this.labels.includes(labelName)) {
 			let element = this.createElementForLabel(labelName);
@@ -302,23 +296,41 @@ class MetalNeo4j extends Component {
 		}
 	}
 
+	onClearQueryBoardEventHandler(event) {
+		event.preventDefault();
+
+		let dragDropTarget = document.querySelector('#dragDropTargetId');
+
+		while (dragDropTarget.firstChild) {
+			dragDropTarget.removeChild(dragDropTarget.firstChild);
+		}
+	}
+
 	onSubmitEventHandler(event) {
 		event.preventDefault();
 
 		let form = document.querySelector('#queryFormId');
 		let inputs = form.getElementsByTagName('input');
+		let cypherQuery = '';
 
 		for (let i = 0; i < inputs.length; i++) {
-			console.log(inputs[i]);
+			let input = inputs[i];
+
+			let label = input.getAttribute('data-label');
+			let property = input.getAttribute('data-property');
+			let operator = input.getAttribute('data-operator');
+
+			// TODO Build query
+			cypherQuery += '';
 		}
 
-	// app.runQuery(event.target[0].value)
-	//   .then( function(result)
-	//   {
-	//     app.records = result.records;
-	//     app.commands.push(event.target[0].value);
-	//   })
-	//   .catch( err => app.handleQueryError_(err) );
+		app.runQuery(cypherQuery)
+			.then( function(result)
+			{
+				app.records = result.records;
+				app.commands.push(event.target[0].value);
+			})
+			.catch( err => app.handleQueryError_(err) );
 	}
 }
 Soy.register(MetalNeo4j, templates);
