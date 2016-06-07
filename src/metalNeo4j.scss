@@ -13,7 +13,7 @@ body.open {
   overflow: hidden;
 }
 
-html, body, form, .section, .container-fluid {
+html, body, form, .section, #content, .container-fluid, .metal-neo4j {
     height: 100%;
 }
 
@@ -32,10 +32,6 @@ html, body, form, .section, .container-fluid {
 
 .navbar {
   margin-bottom: 14px;
-}
-
-.row {
-  padding-bottom: 24px;
 }
 
 .graph-element-card {

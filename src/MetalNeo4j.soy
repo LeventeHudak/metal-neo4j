@@ -10,71 +10,73 @@
  * @param relations
  */
 {template .render}
-	<nav class="collapse-basic-search navbar navbar-default navbar-no-collapse" id="navbarId">
-		<ul class="nav navbar-nav">
-				<li>
-					<a class="control-menu-icon">
-						<img height="26" src="https://avatars3.githubusercontent.com/u/201120?v=3&s=200"></img>
-					</a>
-				</li>
-				<li class="active">
-					<a class="control-menu-icon" href="#">Metal Neo4j</a>
-				</li>
-				<li>
-					<a class="control-menu-icon" data-onclick="{$onInitalizeGraphEventHandler}" href="#">
-						<span class="icon-tasks icon-large"></span>
-					</a>
-				</li>
-				<li>
-					<a class="control-menu-icon" data-onclick="{$onClearQueryBoardEventHandler}" href="#">
-						<span class="icon-refresh icon-large"></span>
-					</a>
-				</li>
-				<li>
-					<a data-onclick="{$onSubmitEventHandler}" href="#">
-						<span class="icon-bolt icon-large"></span>
-					</a>
-				</li>
-		</ul>
-	</nav>
+	<div class="metal-neo4j">
+		<nav class="collapse-basic-search navbar navbar-default navbar-no-collapse" id="navbarId">
+			<ul class="nav navbar-nav">
+					<li>
+						<a class="control-menu-icon">
+							<img height="26" src="https://avatars3.githubusercontent.com/u/201120?v=3&s=200"></img>
+						</a>
+					</li>
+					<li class="active">
+						<a class="control-menu-icon" href="#">Metal Neo4j</a>
+					</li>
+					<li>
+						<a class="control-menu-icon" data-onclick="{$onInitalizeGraphEventHandler}" href="#">
+							<span class="icon-tasks icon-large"></span>
+						</a>
+					</li>
+					<li>
+						<a class="control-menu-icon" data-onclick="{$onClearQueryBoardEventHandler}" href="#">
+							<span class="icon-refresh icon-large"></span>
+						</a>
+					</li>
+					<li>
+						<a data-onclick="{$onSubmitEventHandler}" href="#">
+							<span class="icon-bolt icon-large"></span>
+						</a>
+					</li>
+			</ul>
+		</nav>
 
-	<div class="section">
-		<div class="container-fluid">
-			<div id="errorId"></div>
+		<div class="section">
+			<div class="container-fluid">
+				<div id="errorId"></div>
 
-			<div class="row">
-				<div class="col-md-4 flex-container">
-					{foreach $label in $labels}
-						<div class="card card-rounded drag-drop-item graph-element-card" data-label="{$label}">
-							<div class="card-row card-row-padded card-row-valign-top">
-								<h4>{$label}</h4>
+				<div class="row">
+					<div class="col-md-4 flex-container">
+						{foreach $label in $labels}
+							<div class="card card-rounded drag-drop-item graph-element-card" data-label="{$label}">
+								<div class="card-row card-row-padded card-row-valign-top">
+									<h4>{$label}</h4>
+								</div>
 							</div>
-						</div>
-					{/foreach}
-				</div>
-				<div class="col-md-4 flex-container">
-					{foreach $relation in $relations}
-						<div class="card card-rounded drag-drop-item graph-element-card" data-label="{$relation}">
-							<div class="card-row card-row-padded card-row-valign-top">
-								<h4>{$relation}</h4>
+						{/foreach}
+					</div>
+					<div class="col-md-4 flex-container">
+						{foreach $relation in $relations}
+							<div class="card card-rounded drag-drop-item graph-element-card" data-label="{$relation}">
+								<div class="card-row card-row-padded card-row-valign-top">
+									<h4>{$relation}</h4>
+								</div>
 							</div>
-						</div>
-					{/foreach}
-				</div>
-				<div class="col-md-4 flex-container">
-					{foreach $key in $keys}
-						<div class="card card-rounded drag-drop-item graph-element-card" data-label="{$key}">
-							<div class="card-row card-row-padded card-row-valign-top">
-								<h4>{$key}</h4>
+						{/foreach}
+					</div>
+					<div class="col-md-4 flex-container">
+						{foreach $key in $keys}
+							<div class="card card-rounded drag-drop-item graph-element-card" data-label="{$key}">
+								<div class="card-row card-row-padded card-row-valign-top">
+									<h4>{$key}</h4>
+								</div>
 							</div>
-						</div>
-					{/foreach}
+						{/foreach}
+					</div>
 				</div>
+
+				<form data-onsubmit="{$onSubmitEventHandler}" id="queryFormId">
+					<div id="dragDropTargetId" class="row drag-drop-target"></div>
+				</form>
 			</div>
-
-			<form data-onsubmit="{$onSubmitEventHandler}" id="queryFormId">
-				<div id="dragDropTargetId" class="row drag-drop-target"></div>
-			</form>
 		</div>
 	</div>
 {/template}
