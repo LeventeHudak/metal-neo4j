@@ -40,59 +40,57 @@ var iattr = IncrementalDom.attr;
  * @suppress {checkTypes}
  */
 function $render(opt_data, opt_ignored, opt_ijData) {
-  ie_open('nav', null, null,
-      'class', 'collapse-basic-search navbar navbar-default navbar-no-collapse',
-      'id', 'navbarId');
-    ie_open('ul', null, null,
-        'class', 'nav navbar-nav');
-      ie_open('li');
-        ie_open('a', null, null,
-            'class', 'control-menu-icon');
-          ie_void('img', null, null,
-              'height', '26',
-              'src', 'https://avatars3.githubusercontent.com/u/201120?v=3&s=200');
-        ie_close('a');
-      ie_close('li');
-      ie_open('li', null, null,
-          'class', 'active');
-        ie_open('a', null, null,
-            'href', '#');
-          itext('Metal Neo4j');
-        ie_close('a');
-      ie_close('li');
-    ie_close('ul');
-    ie_open('form', null, null,
-        'class', 'basic-search input-group');
-      ie_open('div', null, null,
-          'class', 'input-group-input');
-        ie_open('div', null, null,
-            'class', 'basic-search-slider');
-          ie_open('button', null, null,
-              'class', 'basic-search-close btn btn-default',
-              'type', 'button');
-            ie_void('span', null, null,
-                'class', 'icon-remove');
-          ie_close('button');
-          ie_open('input', null, null,
-              'class', 'form-control',
-              'placeholder', ' Search...',
-              'type', 'text');
-          ie_close('input');
-        ie_close('div');
-      ie_close('div');
-      ie_open('div', null, null,
-          'class', 'input-group-btn');
-        ie_open('button', null, null,
-            'class', 'btn btn-default',
-            'type', 'submit');
-          ie_void('span', null, null,
-              'class', 'icon-search');
-        ie_close('button');
-      ie_close('div');
-    ie_close('form');
-  ie_close('nav');
   ie_open('div', null, null,
-      'class', 'section');
+      'class', 'metal-neo4j');
+    ie_open('nav', null, null,
+        'class', 'collapse-basic-search navbar navbar-default navbar-no-collapse',
+        'id', 'navbarId');
+      ie_open('ul', null, null,
+          'class', 'nav navbar-nav');
+        ie_open('li');
+          ie_open('a', null, null,
+              'class', 'control-menu-icon');
+            ie_void('img', null, null,
+                'height', '26',
+                'src', 'https://avatars3.githubusercontent.com/u/201120?v=3&s=200');
+          ie_close('a');
+        ie_close('li');
+        ie_open('li', null, null,
+            'class', 'active');
+          ie_open('a', null, null,
+              'class', 'control-menu-icon',
+              'href', '#');
+            itext('Metal Neo4j');
+          ie_close('a');
+        ie_close('li');
+        ie_open('li');
+          ie_open('a', null, null,
+              'class', 'control-menu-icon',
+              'data-onclick', opt_data.onInitalizeGraphEventHandler,
+              'href', '#');
+            ie_void('span', null, null,
+                'class', 'icon-tasks icon-large');
+          ie_close('a');
+        ie_close('li');
+        ie_open('li');
+          ie_open('a', null, null,
+              'class', 'control-menu-icon',
+              'data-onclick', opt_data.onClearQueryBoardEventHandler,
+              'href', '#');
+            ie_void('span', null, null,
+                'class', 'icon-refresh icon-large');
+          ie_close('a');
+        ie_close('li');
+        ie_open('li');
+          ie_open('a', null, null,
+              'data-onclick', opt_data.onSubmitEventHandler,
+              'href', '#');
+            ie_void('span', null, null,
+                'class', 'icon-bolt icon-large');
+          ie_close('a');
+        ie_close('li');
+      ie_close('ul');
+    ie_close('nav');
     ie_open('div', null, null,
         'class', 'container-fluid');
       ie_void('div', null, null,
@@ -100,130 +98,67 @@ function $render(opt_data, opt_ignored, opt_ijData) {
       ie_open('div', null, null,
           'class', 'row');
         ie_open('div', null, null,
-            'class', 'col-md-12');
-          ie_open('form', null, null,
-              'data-onsubmit', opt_data.onSubmitEventHandler);
+            'class', 'col-md-4 flex-container');
+          var labelList15 = opt_data.labels;
+          var labelListLen15 = labelList15.length;
+          for (var labelIndex15 = 0; labelIndex15 < labelListLen15; labelIndex15++) {
+            var labelData15 = labelList15[labelIndex15];
             ie_open('div', null, null,
-                'class', 'input-group-default input-group-lg');
-              ie_open('span', null, null,
-                  'class', 'input-group-addon');
-                itext('$');
-              ie_close('span');
-              ie_open('input', null, null,
-                  'aria-label', 'Query',
-                  'class', 'form-control',
-                  'placeholder', 'Cypher query...',
-                  'type', 'text');
-              ie_close('input');
+                'class', 'card card-rounded drag-drop-item graph-element-card',
+                'data-label', labelData15);
+              ie_open('div', null, null,
+                  'class', 'card-row card-row-padded card-row-valign-top');
+                ie_open('h4');
+                  itext((goog.asserts.assert((labelData15) != null), labelData15));
+                ie_close('h4');
+              ie_close('div');
             ie_close('div');
-          ie_close('form');
+          }
+        ie_close('div');
+        ie_open('div', null, null,
+            'class', 'col-md-4 flex-container');
+          var relationList23 = opt_data.relations;
+          var relationListLen23 = relationList23.length;
+          for (var relationIndex23 = 0; relationIndex23 < relationListLen23; relationIndex23++) {
+            var relationData23 = relationList23[relationIndex23];
+            ie_open('div', null, null,
+                'class', 'card card-rounded drag-drop-item graph-element-card',
+                'data-label', relationData23);
+              ie_open('div', null, null,
+                  'class', 'card-row card-row-padded card-row-valign-top');
+                ie_open('h4');
+                  itext((goog.asserts.assert((relationData23) != null), relationData23));
+                ie_close('h4');
+              ie_close('div');
+            ie_close('div');
+          }
+        ie_close('div');
+        ie_open('div', null, null,
+            'class', 'col-md-4 flex-container');
+          var keyList31 = opt_data.keys;
+          var keyListLen31 = keyList31.length;
+          for (var keyIndex31 = 0; keyIndex31 < keyListLen31; keyIndex31++) {
+            var keyData31 = keyList31[keyIndex31];
+            ie_open('div', null, null,
+                'class', 'card card-rounded drag-drop-item graph-element-card',
+                'data-label', keyData31);
+              ie_open('div', null, null,
+                  'class', 'card-row card-row-padded card-row-valign-top');
+                ie_open('h4');
+                  itext((goog.asserts.assert((keyData31) != null), keyData31));
+                ie_close('h4');
+              ie_close('div');
+            ie_close('div');
+          }
         ie_close('div');
       ie_close('div');
-      if (opt_data.commands.length > 0) {
-        ie_open('div', null, null,
-            'class', 'panel panel-default');
-          ie_open('div', null, null,
-              'class', 'panel-heading',
-              'id', 'headingOne',
-              'role', 'tab');
-            ie_open('div', null, null,
-                'class', 'panel-title');
-              ie_open('a', null, null,
-                  'aria-controls', 'collapseOne',
-                  'aria-expanded', 'true',
-                  'data-toggle', 'collapse',
-                  'href', '#collapseOne',
-                  'role', 'button');
-                itext('Commands');
-              ie_close('a');
-            ie_close('div');
-          ie_close('div');
-          ie_open('div', null, null,
-              'aria-labelledby', 'headingOne',
-              'class', 'panel-collapse collapse in',
-              'id', 'collapseOne',
-              'role', 'tabpanel');
-            ie_open('div', null, null,
-                'class', 'panel-body');
-              ie_open('div', null, null,
-                  'class', 'row',
-                  'id', 'rowCollapse1');
-                ie_open('div', null, null,
-                    'class', 'col-md-12');
-                  ie_open('div', null, null,
-                      'class', 'timeline');
-                    var commandList12 = opt_data.commands;
-                    var commandListLen12 = commandList12.length;
-                    for (var commandIndex12 = 0; commandIndex12 < commandListLen12; commandIndex12++) {
-                      var commandData12 = commandList12[commandIndex12];
-                      ie_open('div', null, null,
-                          'class', 'timeline-item');
-                        ie_open('div', null, null,
-                            'class', 'panel panel-default');
-                          ie_open('div', null, null,
-                              'class', 'panel-body');
-                            ie_open('div', null, null,
-                                'class', 'timeline-increment-icon');
-                              ie_void('span', null, null,
-                                  'class', 'timeline-icon');
-                            ie_close('div');
-                            itext((goog.asserts.assert((commandData12) != null), commandData12));
-                          ie_close('div');
-                        ie_close('div');
-                      ie_close('div');
-                    }
-                  ie_close('div');
-                ie_close('div');
-              ie_close('div');
-            ie_close('div');
-          ie_close('div');
-        ie_close('div');
-      }
-      if (opt_data.records.length > 0) {
-        ie_open('div', null, null,
-            'class', 'panel panel-default');
-          ie_open('div', null, null,
-              'class', 'panel-heading',
-              'id', 'headingTwo',
-              'role', 'tab');
-            ie_open('div', null, null,
-                'class', 'panel-title');
-              ie_open('a', null, null,
-                  'aria-controls', 'collapseTwo',
-                  'aria-expanded', 'true',
-                  'data-toggle', 'collapse',
-                  'href', '#collapseTwo',
-                  'role', 'button');
-                itext('Records');
-              ie_close('a');
-            ie_close('div');
-          ie_close('div');
-          ie_open('div', null, null,
-              'aria-labelledby', 'headingTwo',
-              'class', 'panel-collapse collapse in',
-              'id', 'collapseTwo',
-              'role', 'tabpanel');
-            ie_open('div', null, null,
-                'class', 'panel-body');
-              ie_open('div', null, null,
-                  'class', 'row');
-                ie_open('div', null, null,
-                    'class', 'col-md-12');
-                  ie_open('div', null, null,
-                      'id', 'queryResultId');
-                    var recordList21 = opt_data.records;
-                    var recordListLen21 = recordList21.length;
-                    for (var recordIndex21 = 0; recordIndex21 < recordListLen21; recordIndex21++) {
-                      var recordData21 = recordList21[recordIndex21];
-                      $renderCard({record: recordData21, currentIndex: recordIndex21}, null, opt_ijData);
-                    }
-                  ie_close('div');
-                ie_close('div');
-              ie_close('div');
-            ie_close('div');
-          ie_close('div');
-        ie_close('div');
-      }
+      ie_open('form', null, null,
+          'data-onsubmit', opt_data.onSubmitEventHandler,
+          'id', 'queryFormId');
+        ie_void('div', null, null,
+            'id', 'dragDropTargetId',
+            'class', 'row drag-drop-target');
+      ie_close('form');
     ie_close('div');
   ie_close('div');
 }
@@ -232,50 +167,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'MetalNeo4j.render';
 }
 
-
-/**
- * @param {Object<string, *>=} opt_data
- * @param {(null|undefined)=} opt_ignored
- * @param {Object<string, *>=} opt_ijData
- * @return {void}
- * @suppress {checkTypes}
- */
-function $renderCard(opt_data, opt_ignored, opt_ijData) {
-  ie_open('div', null, null,
-      'class', 'card card-horizontal card-rounded card-inline bg-primary');
-    ie_open('div', null, null,
-        'class', 'card-row card-row-valign-top');
-      ie_open('div', null, null,
-          'class', 'card-col-content card-col-gutters');
-        ie_open('h4');
-          itext('Record ');
-          itext((goog.asserts.assert((opt_data.currentIndex) != null), opt_data.currentIndex));
-        ie_close('h4');
-        ie_void('div', null, null,
-            'class', 'divider');
-        var keyList34 = opt_data.record.keys;
-        var keyListLen34 = keyList34.length;
-        for (var keyIndex34 = 0; keyIndex34 < keyListLen34; keyIndex34++) {
-          var keyData34 = keyList34[keyIndex34];
-          ie_open('p');
-            itext((goog.asserts.assert((keyData34) != null), keyData34));
-            itext(' = ');
-            itext((goog.asserts.assert((opt_data.record._fields[keyIndex34]) != null), opt_data.record._fields[keyIndex34]));
-          ie_close('p');
-        }
-      ie_close('div');
-    ie_close('div');
-  ie_close('div');
-}
-exports.renderCard = $renderCard;
-if (goog.DEBUG) {
-  $renderCard.soyTemplateName = 'MetalNeo4j.renderCard';
-}
-
-exports.render.params = ["commands","onSubmitEventHandler","records"];
-exports.render.types = {"commands":"any","onSubmitEventHandler":"any","records":"any"};
-exports.renderCard.params = ["record","currentIndex"];
-exports.renderCard.types = {"record":"any","currentIndex":"any"};
+exports.render.params = ["keys","labels","onClearQueryBoardEventHandler","onInitalizeGraphEventHandler","onSubmitEventHandler","relations"];
+exports.render.types = {"keys":"any","labels":"any","onClearQueryBoardEventHandler":"any","onInitalizeGraphEventHandler":"any","onSubmitEventHandler":"any","relations":"any"};
 templates = exports;
 return exports;
 
