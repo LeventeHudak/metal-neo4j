@@ -88,35 +88,6 @@ function $render(opt_data, opt_ignored, opt_ijData) {
         ie_close('a');
       ie_close('li');
     ie_close('ul');
-    ie_open('form', null, null,
-        'class', 'basic-search input-group');
-      ie_open('div', null, null,
-          'class', 'input-group-input');
-        ie_open('div', null, null,
-            'class', 'basic-search-slider');
-          ie_open('button', null, null,
-              'class', 'basic-search-close btn btn-default',
-              'type', 'button');
-            ie_void('span', null, null,
-                'class', 'icon-remove');
-          ie_close('button');
-          ie_open('input', null, null,
-              'class', 'form-control',
-              'placeholder', ' Search...',
-              'type', 'text');
-          ie_close('input');
-        ie_close('div');
-      ie_close('div');
-      ie_open('div', null, null,
-          'class', 'input-group-btn');
-        ie_open('button', null, null,
-            'class', 'btn btn-default',
-            'type', 'submit');
-          ie_void('span', null, null,
-              'class', 'icon-search');
-        ie_close('button');
-      ie_close('div');
-    ie_close('form');
   ie_close('nav');
   ie_open('div', null, null,
       'class', 'section');

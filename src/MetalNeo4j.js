@@ -171,11 +171,21 @@ class MetalNeo4j extends Component {
 		let cardRowDiv = document.createElement('div');
 		cardRowDiv.className = 'card-row card-row-padded card-row-valign-top';
 
+		let cardInlineScrollerDiv = document.createElement('div');
+		cardInlineScrollerDiv.className = 'inline-scroller';
+
 		let cardTitle = document.createElement('h3');
 		cardTitle.innerText = label;
 		cardTitle.className = 'handle';
 
 		cardDiv.appendChild(cardRowDiv);
+
+		let divider = document.createElement('div');
+		divider.className = 'divider';
+
+		cardDiv.appendChild(divider);
+
+		cardDiv.appendChild(cardInlineScrollerDiv);
 		cardRowDiv.appendChild(cardTitle);
 
 		let modalId = 'modalId_' + label + '_' + this.createUniqueId();
@@ -193,10 +203,14 @@ class MetalNeo4j extends Component {
 		cardAddInputCriteriaBtn.setAttributeNode(dataToggle);
 		cardAddInputCriteriaBtn.setAttributeNode(dataTarget);
 
-		cardRowDiv.appendChild(cardAddInputCriteriaBtn);
+		let divider2 = document.createElement('div');
+		divider2.className = 'divider';
 
-		let modalElement = this.createLabelCriteriaSelectorElement(modalId, properties, label, cardRowDiv);
-		cardRowDiv.appendChild(modalElement);
+		cardInlineScrollerDiv.appendChild(divider2);
+		cardInlineScrollerDiv.appendChild(cardAddInputCriteriaBtn);
+
+		let modalElement = this.createLabelCriteriaSelectorElement(modalId, properties, label, cardInlineScrollerDiv);
+		cardInlineScrollerDiv.appendChild(modalElement);
 
 		return cardDiv;
 	}
@@ -277,7 +291,7 @@ class MetalNeo4j extends Component {
 				input = app.createInputElementForProperty(property, labelName, operator);
 			}
 
-			element.insertBefore(input, element.firstChild.nextSibling);
+			element.insertBefore(input, element.firstChild);
 		});
 
 		return modalFragment;
