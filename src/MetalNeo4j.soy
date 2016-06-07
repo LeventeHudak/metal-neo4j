@@ -57,22 +57,28 @@
 			<div class="row">
 				<div class="col-md-4 flex-container">
 					{foreach $label in $labels}
-						<div class="text-info bg-default drag-drop-item" data-label="{$label}">
-							{$label}
+						<div class="card card-rounded drag-drop-item graph-element-card" data-label="{$label}">
+							<div class="card-row card-row-padded card-row-valign-top">
+								<h4>{$label}</h4>
+							</div>
 						</div>
 					{/foreach}
 				</div>
 				<div class="col-md-4 flex-container">
 					{foreach $relation in $relations}
-						<div class="text-info bg-default drag-drop-item" data-label="{$relation}">
-							{$relation}
+						<div class="card card-rounded drag-drop-item graph-element-card" data-label="{$relation}">
+							<div class="card-row card-row-padded card-row-valign-top">
+								<h4>{$relation}</h4>
+							</div>
 						</div>
 					{/foreach}
 				</div>
 				<div class="col-md-4 flex-container">
 					{foreach $key in $keys}
-						<div class="text-info bg-default drag-drop-item" data-label="{$key}">
-							{$key}
+						<div class="card card-rounded drag-drop-item graph-element-card" data-label="{$key}">
+							<div class="card-row card-row-padded card-row-valign-top">
+								<h4>{$key}</h4>
+							</div>
 						</div>
 					{/foreach}
 				</div>

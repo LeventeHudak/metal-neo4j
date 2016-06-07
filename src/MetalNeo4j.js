@@ -293,6 +293,10 @@ class MetalNeo4j extends Component {
 			let element = this.createElementForLabel(labelName);
 			let target = document.querySelector('#dragDropTargetId');
 			target.appendChild(element);
+
+			element.style.position = 'absolute';
+			element.style.left = data.x + 'px';
+			element.style.top = data.y + 'px';
 		}
 	}
 

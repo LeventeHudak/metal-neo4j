@@ -19,6 +19,25 @@ html, body {
   padding-bottom: 24px;
 }
 
+.graph-element-card {
+  margin: 2px;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+
+  h4 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+}
+
+.graph-element-card:hover {
+  cursor: move;
+}
+
 h3:hover {
   cursor: move;
 }

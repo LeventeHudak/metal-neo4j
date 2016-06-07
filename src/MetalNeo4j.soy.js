@@ -133,9 +133,14 @@ function $render(opt_data, opt_ignored, opt_ijData) {
           for (var labelIndex15 = 0; labelIndex15 < labelListLen15; labelIndex15++) {
             var labelData15 = labelList15[labelIndex15];
             ie_open('div', null, null,
-                'class', 'text-info bg-default drag-drop-item',
+                'class', 'card card-rounded drag-drop-item graph-element-card',
                 'data-label', labelData15);
-              itext((goog.asserts.assert((labelData15) != null), labelData15));
+              ie_open('div', null, null,
+                  'class', 'card-row card-row-padded card-row-valign-top');
+                ie_open('h4');
+                  itext((goog.asserts.assert((labelData15) != null), labelData15));
+                ie_close('h4');
+              ie_close('div');
             ie_close('div');
           }
         ie_close('div');
@@ -146,9 +151,14 @@ function $render(opt_data, opt_ignored, opt_ijData) {
           for (var relationIndex23 = 0; relationIndex23 < relationListLen23; relationIndex23++) {
             var relationData23 = relationList23[relationIndex23];
             ie_open('div', null, null,
-                'class', 'text-info bg-default drag-drop-item',
+                'class', 'card card-rounded drag-drop-item graph-element-card',
                 'data-label', relationData23);
-              itext((goog.asserts.assert((relationData23) != null), relationData23));
+              ie_open('div', null, null,
+                  'class', 'card-row card-row-padded card-row-valign-top');
+                ie_open('h4');
+                  itext((goog.asserts.assert((relationData23) != null), relationData23));
+                ie_close('h4');
+              ie_close('div');
             ie_close('div');
           }
         ie_close('div');
@@ -159,9 +169,14 @@ function $render(opt_data, opt_ignored, opt_ijData) {
           for (var keyIndex31 = 0; keyIndex31 < keyListLen31; keyIndex31++) {
             var keyData31 = keyList31[keyIndex31];
             ie_open('div', null, null,
-                'class', 'text-info bg-default drag-drop-item',
+                'class', 'card card-rounded drag-drop-item graph-element-card',
                 'data-label', keyData31);
-              itext((goog.asserts.assert((keyData31) != null), keyData31));
+              ie_open('div', null, null,
+                  'class', 'card-row card-row-padded card-row-valign-top');
+                ie_open('h4');
+                  itext((goog.asserts.assert((keyData31) != null), keyData31));
+                ie_close('h4');
+              ie_close('div');
             ie_close('div');
           }
         ie_close('div');
