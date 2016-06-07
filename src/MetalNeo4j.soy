@@ -39,44 +39,42 @@
 			</ul>
 		</nav>
 
-		<div class="section">
-			<div class="container-fluid">
-				<div id="errorId"></div>
+		<div class="container-fluid">
+			<div id="errorId"></div>
 
-				<div class="row">
-					<div class="col-md-4 flex-container">
-						{foreach $label in $labels}
-							<div class="card card-rounded drag-drop-item graph-element-card" data-label="{$label}">
-								<div class="card-row card-row-padded card-row-valign-top">
-									<h4>{$label}</h4>
-								</div>
+			<div class="row">
+				<div class="col-md-4 flex-container">
+					{foreach $label in $labels}
+						<div class="card card-rounded drag-drop-item graph-element-card" data-label="{$label}">
+							<div class="card-row card-row-padded card-row-valign-top">
+								<h4>{$label}</h4>
 							</div>
-						{/foreach}
-					</div>
-					<div class="col-md-4 flex-container">
-						{foreach $relation in $relations}
-							<div class="card card-rounded drag-drop-item graph-element-card" data-label="{$relation}">
-								<div class="card-row card-row-padded card-row-valign-top">
-									<h4>{$relation}</h4>
-								</div>
-							</div>
-						{/foreach}
-					</div>
-					<div class="col-md-4 flex-container">
-						{foreach $key in $keys}
-							<div class="card card-rounded drag-drop-item graph-element-card" data-label="{$key}">
-								<div class="card-row card-row-padded card-row-valign-top">
-									<h4>{$key}</h4>
-								</div>
-							</div>
-						{/foreach}
-					</div>
+						</div>
+					{/foreach}
 				</div>
-
-				<form data-onsubmit="{$onSubmitEventHandler}" id="queryFormId">
-					<div id="dragDropTargetId" class="row drag-drop-target"></div>
-				</form>
+				<div class="col-md-4 flex-container">
+					{foreach $relation in $relations}
+						<div class="card card-rounded drag-drop-item graph-element-card" data-label="{$relation}">
+							<div class="card-row card-row-padded card-row-valign-top">
+								<h4>{$relation}</h4>
+							</div>
+						</div>
+					{/foreach}
+				</div>
+				<div class="col-md-4 flex-container">
+					{foreach $key in $keys}
+						<div class="card card-rounded drag-drop-item graph-element-card" data-label="{$key}">
+							<div class="card-row card-row-padded card-row-valign-top">
+								<h4>{$key}</h4>
+							</div>
+						</div>
+					{/foreach}
+				</div>
 			</div>
+
+			<form data-onsubmit="{$onSubmitEventHandler}" id="queryFormId">
+				<div id="dragDropTargetId" class="row drag-drop-target"></div>
+			</form>
 		</div>
 	</div>
 {/template}

@@ -92,76 +92,73 @@ function $render(opt_data, opt_ignored, opt_ijData) {
       ie_close('ul');
     ie_close('nav');
     ie_open('div', null, null,
-        'class', 'section');
+        'class', 'container-fluid');
+      ie_void('div', null, null,
+          'id', 'errorId');
       ie_open('div', null, null,
-          'class', 'container-fluid');
-        ie_void('div', null, null,
-            'id', 'errorId');
+          'class', 'row');
         ie_open('div', null, null,
-            'class', 'row');
-          ie_open('div', null, null,
-              'class', 'col-md-4 flex-container');
-            var labelList15 = opt_data.labels;
-            var labelListLen15 = labelList15.length;
-            for (var labelIndex15 = 0; labelIndex15 < labelListLen15; labelIndex15++) {
-              var labelData15 = labelList15[labelIndex15];
+            'class', 'col-md-4 flex-container');
+          var labelList15 = opt_data.labels;
+          var labelListLen15 = labelList15.length;
+          for (var labelIndex15 = 0; labelIndex15 < labelListLen15; labelIndex15++) {
+            var labelData15 = labelList15[labelIndex15];
+            ie_open('div', null, null,
+                'class', 'card card-rounded drag-drop-item graph-element-card',
+                'data-label', labelData15);
               ie_open('div', null, null,
-                  'class', 'card card-rounded drag-drop-item graph-element-card',
-                  'data-label', labelData15);
-                ie_open('div', null, null,
-                    'class', 'card-row card-row-padded card-row-valign-top');
-                  ie_open('h4');
-                    itext((goog.asserts.assert((labelData15) != null), labelData15));
-                  ie_close('h4');
-                ie_close('div');
+                  'class', 'card-row card-row-padded card-row-valign-top');
+                ie_open('h4');
+                  itext((goog.asserts.assert((labelData15) != null), labelData15));
+                ie_close('h4');
               ie_close('div');
-            }
-          ie_close('div');
-          ie_open('div', null, null,
-              'class', 'col-md-4 flex-container');
-            var relationList23 = opt_data.relations;
-            var relationListLen23 = relationList23.length;
-            for (var relationIndex23 = 0; relationIndex23 < relationListLen23; relationIndex23++) {
-              var relationData23 = relationList23[relationIndex23];
-              ie_open('div', null, null,
-                  'class', 'card card-rounded drag-drop-item graph-element-card',
-                  'data-label', relationData23);
-                ie_open('div', null, null,
-                    'class', 'card-row card-row-padded card-row-valign-top');
-                  ie_open('h4');
-                    itext((goog.asserts.assert((relationData23) != null), relationData23));
-                  ie_close('h4');
-                ie_close('div');
-              ie_close('div');
-            }
-          ie_close('div');
-          ie_open('div', null, null,
-              'class', 'col-md-4 flex-container');
-            var keyList31 = opt_data.keys;
-            var keyListLen31 = keyList31.length;
-            for (var keyIndex31 = 0; keyIndex31 < keyListLen31; keyIndex31++) {
-              var keyData31 = keyList31[keyIndex31];
-              ie_open('div', null, null,
-                  'class', 'card card-rounded drag-drop-item graph-element-card',
-                  'data-label', keyData31);
-                ie_open('div', null, null,
-                    'class', 'card-row card-row-padded card-row-valign-top');
-                  ie_open('h4');
-                    itext((goog.asserts.assert((keyData31) != null), keyData31));
-                  ie_close('h4');
-                ie_close('div');
-              ie_close('div');
-            }
-          ie_close('div');
+            ie_close('div');
+          }
         ie_close('div');
-        ie_open('form', null, null,
-            'data-onsubmit', opt_data.onSubmitEventHandler,
-            'id', 'queryFormId');
-          ie_void('div', null, null,
-              'id', 'dragDropTargetId',
-              'class', 'row drag-drop-target');
-        ie_close('form');
+        ie_open('div', null, null,
+            'class', 'col-md-4 flex-container');
+          var relationList23 = opt_data.relations;
+          var relationListLen23 = relationList23.length;
+          for (var relationIndex23 = 0; relationIndex23 < relationListLen23; relationIndex23++) {
+            var relationData23 = relationList23[relationIndex23];
+            ie_open('div', null, null,
+                'class', 'card card-rounded drag-drop-item graph-element-card',
+                'data-label', relationData23);
+              ie_open('div', null, null,
+                  'class', 'card-row card-row-padded card-row-valign-top');
+                ie_open('h4');
+                  itext((goog.asserts.assert((relationData23) != null), relationData23));
+                ie_close('h4');
+              ie_close('div');
+            ie_close('div');
+          }
+        ie_close('div');
+        ie_open('div', null, null,
+            'class', 'col-md-4 flex-container');
+          var keyList31 = opt_data.keys;
+          var keyListLen31 = keyList31.length;
+          for (var keyIndex31 = 0; keyIndex31 < keyListLen31; keyIndex31++) {
+            var keyData31 = keyList31[keyIndex31];
+            ie_open('div', null, null,
+                'class', 'card card-rounded drag-drop-item graph-element-card',
+                'data-label', keyData31);
+              ie_open('div', null, null,
+                  'class', 'card-row card-row-padded card-row-valign-top');
+                ie_open('h4');
+                  itext((goog.asserts.assert((keyData31) != null), keyData31));
+                ie_close('h4');
+              ie_close('div');
+            ie_close('div');
+          }
+        ie_close('div');
       ie_close('div');
+      ie_open('form', null, null,
+          'data-onsubmit', opt_data.onSubmitEventHandler,
+          'id', 'queryFormId');
+        ie_void('div', null, null,
+            'id', 'dragDropTargetId',
+            'class', 'row drag-drop-target');
+      ie_close('form');
     ie_close('div');
   ie_close('div');
 }
