@@ -168,6 +168,11 @@ class MetalNeo4j extends Component {
 		let cardDiv = document.createElement('div');
 		cardDiv.className = 'card card-rounded query-element-drag';
 
+		let dataLabel = document.createAttribute('data-label');
+		dataLabel.value = label;
+
+		cardDiv.setAttributeNode(dataLabel);
+
 		let cardRowDiv = document.createElement('div');
 		cardRowDiv.className = 'card-row card-row-padded card-row-valign-top';
 
@@ -221,8 +226,6 @@ class MetalNeo4j extends Component {
 		}
 		return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 	}
-
-
 
 	createLabelCriteriaSelectorElement(modalId, properties, labelName, element) {
 		let app = this;
@@ -328,9 +331,11 @@ class MetalNeo4j extends Component {
 		event.preventDefault();
 
 		let form = document.querySelector('#queryFormId');
+		let cards = form.querySelectorAll('.card');
 		let inputs = form.getElementsByTagName('input');
 		let cypherQuery = '';
 
+		console.log(cards);
 		for (let i = 0; i < inputs.length; i++) {
 			let input = inputs[i];
 
