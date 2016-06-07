@@ -31,6 +31,9 @@
 	},
 	"devDependencies": {
 		"gulp": "^3.8.11",
-		"gulp-metal": "^1.2.0"
+		"gulp-metal": "^1.2.0",
+		"html2incdom": "^0.1.6",
+		"metal-incremental-dom": "^1.0.0-rc.38",
+		"metal-soy-bundle": "^1.2.1"
 	}
 }
