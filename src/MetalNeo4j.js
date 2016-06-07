@@ -328,13 +328,16 @@ class MetalNeo4j extends Component {
 			cypherQuery += '';
 		}
 
-		app.runQuery(cypherQuery)
-			.then( function(result)
-			{
-				app.records = result.records;
-				app.commands.push(event.target[0].value);
-			})
-			.catch( err => app.handleQueryError_(err) );
+		if (cypherQuery !== '') {
+			let app = this;
+
+			this.runQuery(cypherQuery)
+				.then( function(result)
+				{
+					app.records = result.records;
+				})
+				.catch( err => app.handleQueryError_(err) );
+		}
 	}
 }
 Soy.register(MetalNeo4j, templates);
