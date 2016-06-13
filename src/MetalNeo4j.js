@@ -18,14 +18,14 @@ class MetalNeo4j extends Component {
 
 		this.labelProperties_ = new Map();
 		this.relationProperties_ = [];
-		
+
 		String.prototype.format = function() {
 			var content = this;
 			for (var i=0; i < arguments.length; i++) {
 				var replacement = '{' + i + '}';
 				content = content.replace(replacement, arguments[i]);
 			}
-		
+
 			return content;
 		};
 	}
@@ -208,6 +208,7 @@ class MetalNeo4j extends Component {
 		let cardAddInputCriteriaBtn = document.createElement('button');
 		cardAddInputCriteriaBtn.className = 'btn btn-block btn-primary btn-sm';
 		cardAddInputCriteriaBtn.innerHTML = 'Add criteria';
+		cardAddInputCriteriaBtn.type = 'button';
 
 		let dataToggle = document.createAttribute('data-toggle');
 		dataToggle.value = 'modal';
@@ -343,62 +344,66 @@ class MetalNeo4j extends Component {
 		let form = document.querySelector('#queryFormId');
 		let cards = form.querySelectorAll('.card');
 		let cypherQuery = '';
-		
+
 		let singleMatchCypherPattern = 'MATCH(n:{0}) {1} return n';
 		let whereCriteriaPattern = 'WHERE {0}';
 
 		for (let i = 0; i < cards.length; i++) {
-            let card = cards[i];
-			
+      let card = cards[i];
+
 			let cardDataLabel = card.getAttribute('data-label');
 			let matchCypher = singleMatchCypherPattern.format(cardDataLabel);
-			
+
 			let cardInputs = card.getElementsByTagName('input');
-			
+
 			let cardInputCypher = '';
-					
+
 			for (let x = 0; x < cardInputs.length; x++) {
-                let input = cardInputs[x];
-				
+        let input = cardInputs[x];
+
 				let label = input.getAttribute('data-label');
-				
-				if (!label || (label != cardDataLabel)) {
+
+				if (!label || (label !== cardDataLabel)) {
 					continue;
 				}
-				
+
 				let property = input.getAttribute('data-property');
 				let operator = input.getAttribute('data-operator');
 				let value = input.value;
-				
+
 				if (!value) {
 					continue;
 				}
-				
-				if (cardInputCypher && operator == 'NONE') {
+
+				if (cardInputCypher && operator === 'NONE') {
 					operator = 'AND';
 				}
-				
+
 				if (cardInputCypher) {
 					cardInputCypher += (' ' + operator + ' ');
 				}
-				
-				cardInputCypher += ('(' + property + ' = ' + value + ')');
+
+				cardInputCypher += ('(n.' + property + ' = "' + value + '")');
 			}
-			
+
 			if (cardInputCypher) {
 				cardInputCypher = whereCriteriaPattern.format(cardInputCypher);
 			}
-			
+
 			matchCypher = singleMatchCypherPattern.format(cardDataLabel, cardInputCypher);
-			
+
 			if (cypherQuery) {
 				cypherQuery += ' UNION ';
 			}
-           
+
 			cypherQuery += matchCypher;
-        }
-		
-		console.log('Query: ' + cypherQuery);	
+    }
+
+		this.runQuery(cypherQuery).then(event => {
+			console.log(event);
+		});
+
+		console.log('Query: ' + cypherQuery);
 	}
 }
 Soy.register(MetalNeo4j, templates);
