@@ -8,6 +8,10 @@ import Soy from 'metal-soy';
 import 'metal-modal';
 
 class LabelNode extends Component {
+	rendered() {
+		console.log(this.label + '  left: ' + this.left + ' top: ' + this.top);
+	}
+
 	onAddCriteriaClickEventHandler(event) {
 		let selectors = this.components.modal.element.querySelectorAll('select');
 
@@ -30,6 +34,11 @@ class LabelNode extends Component {
 Soy.register(LabelNode, templates);
 
 LabelNode.STATE = {
+	id: {
+		validator: Array.isNumber,
+		valueFn: () => 0
+	},
+
 	inputs: {
 		validator: Array.isArray,
 		valueFn: () => []
@@ -37,21 +46,21 @@ LabelNode.STATE = {
 
 	label: {
 		validator: core.isString,
-		value: ''
+		valueFn: () => ''
 	},
 
 	left: {
 		validator: core.isNumber,
-		value: 0
+		valueFn: () => 0
 	},
 
 	top: {
 		validator: core.isNumber,
-		value: 0
+		valueFn: () => 0
 	},
 
 	properties: {
 		validator: Array.isArray,
 		valueFn: () => []
 	}
-}
+};

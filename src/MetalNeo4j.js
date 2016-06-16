@@ -30,16 +30,16 @@ class MetalNeo4j extends Component {
 			return content;
 		};
 
-		let queryElementsDragDrop = new metal.DragDrop({
+		let graphDbElementsDragDrop = new metal.DragDrop({
 			dragPlaceholder: metal.Drag.Placeholder.CLONE,
 			handles: '.drag-drop-item',
 			sources: '.drag-drop-item',
 			targets: '.drag-drop-target'
 		});
 
-		queryElementsDragDrop.on(metal.DragDrop.Events.END, (data, event) => this.handleDragDrop_(data, event));
+		graphDbElementsDragDrop.on(metal.DragDrop.Events.END, (data, event) => this.handleGraphDbElementsDragDrop_(data, event));
 
-		new metal.DragDrop({
+		let queryElementsDrag = new metal.DragDrop({
 			constrain: '#dragDropTargetId',
 			handles: '.handle',
 			sources: '.query-element-drag',
@@ -48,6 +48,8 @@ class MetalNeo4j extends Component {
 				y: 5
 			}
 		});
+
+		queryElementsDrag.on(metal.DragDrop.Events.DRAG, (data, event) => this.handleQueryElementsDrag_(data, event));
 
 		new metal.DragDrop({
 			handles: '.handle',
@@ -82,14 +84,6 @@ class MetalNeo4j extends Component {
 	handleQueryError_(err) {
 		if (err.fields[0].code === 'Neo.ClientError.Statement.SyntaxError') {
 			console.log(err.fields[0].message);
-
-			this.alert = new Alert({
-				visible: true,
-				body: err.fields[0].message,
-				elementClasses: 'alert-danger',
-				hideDelay: 5000
-			},
-				'#errorId');
 		}
 	}
 
@@ -150,14 +144,40 @@ class MetalNeo4j extends Component {
 		}
 	}
 
-	handleDragDrop_(data, event) {
+	handleQueryElementsDrag_(data, event) {
+		let item = data.source;
+		let id = item.getAttribute('data-id');
+
+		if (dom.hasClass(item, 'metal-label-node')) {
+			for (let i = 0; i < this.queryLabels.length; i++) {
+				if (this.queryLabels[i].id == id) {
+					this.queryLabels[i].left = data.x;
+					this.queryLabels[i].top = data.y;
+				}
+			}
+		}
+		else if (dom.hasClass(item, 'metal-relation-node')) {
+			for (let i = 0; i < this.queryRelations.length; i++) {
+				if (this.queryRelations[i].id == id) {
+					this.queryRelations[i].left = data.x;
+					this.queryRelations[i].top = data.y;
+				}
+			}
+		}
+		else {
+			//TODO for properties maybe
+		}
+	}
+
+	handleGraphDbElementsDragDrop_(data, event) {
 		event.preventDefault();
 
 		let item = data.source;
 		let labelName = item.getAttribute('data-label');
-		console.log(labelName);
+
 		if (this.labels.includes(labelName)) {
 			let queryLabel = {
+				id: core.getUid(),
 				labelName: labelName,
 				left: data.x,
 				top: data.y,
@@ -168,8 +188,9 @@ class MetalNeo4j extends Component {
 			this.queryLabels = this.queryLabels;
 		}
 
-		if (this.relations.includes(labelName)) {
+		else if (this.relations.includes(labelName)) {
 			let queryRelation = {
+				id: core.getUid(),
 				labelName: labelName,
 				left: data.x,
 				top: data.y
@@ -190,6 +211,7 @@ class MetalNeo4j extends Component {
 		}
 
 		this.queryLabels = new Array();
+		this.queryRelations = new Array();
 	}
 
 	onSubmitEventHandler(event) {
@@ -263,10 +285,6 @@ class MetalNeo4j extends Component {
 Soy.register(MetalNeo4j, templates);
 
 MetalNeo4j.STATE = {
-	alert: {
-		value: null
-	},
-
 	keys: {
 		validator: Array.isArray,
 		valueFn: () => []

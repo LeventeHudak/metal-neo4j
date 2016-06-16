@@ -175,17 +175,17 @@ function $render(opt_data, opt_ignored, opt_ijData) {
         ie_open('div', null, null,
             'id', 'dragDropTargetId',
             'class', 'row drag-drop-target');
-          var queryLabelList45 = opt_data.queryLabels;
-          var queryLabelListLen45 = queryLabelList45.length;
-          for (var queryLabelIndex45 = 0; queryLabelIndex45 < queryLabelListLen45; queryLabelIndex45++) {
-            var queryLabelData45 = queryLabelList45[queryLabelIndex45];
-            $templateAlias1({label: queryLabelData45.labelName, left: queryLabelData45.left, top: queryLabelData45.top, properties: queryLabelData45.properties}, null, opt_ijData);
+          var queryLabelList46 = opt_data.queryLabels;
+          var queryLabelListLen46 = queryLabelList46.length;
+          for (var queryLabelIndex46 = 0; queryLabelIndex46 < queryLabelListLen46; queryLabelIndex46++) {
+            var queryLabelData46 = queryLabelList46[queryLabelIndex46];
+            $templateAlias1({id: queryLabelData46.id, label: queryLabelData46.labelName, left: queryLabelData46.left, top: queryLabelData46.top, properties: queryLabelData46.properties}, null, opt_ijData);
           }
-          var queryRelationList51 = opt_data.queryRelations;
-          var queryRelationListLen51 = queryRelationList51.length;
-          for (var queryRelationIndex51 = 0; queryRelationIndex51 < queryRelationListLen51; queryRelationIndex51++) {
-            var queryRelationData51 = queryRelationList51[queryRelationIndex51];
-            $templateAlias2({label: queryRelationData51.labelName, left: queryRelationData51.left, top: queryRelationData51.top}, null, opt_ijData);
+          var queryRelationList53 = opt_data.queryRelations;
+          var queryRelationListLen53 = queryRelationList53.length;
+          for (var queryRelationIndex53 = 0; queryRelationIndex53 < queryRelationListLen53; queryRelationIndex53++) {
+            var queryRelationData53 = queryRelationList53[queryRelationIndex53];
+            $templateAlias2({id: queryRelationData53.id, label: queryRelationData53.labelName, left: queryRelationData53.left, top: queryRelationData53.top}, null, opt_ijData);
           }
         ie_close('div');
       ie_close('form');

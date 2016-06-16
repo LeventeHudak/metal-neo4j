@@ -93,6 +93,7 @@
 				<div id="dragDropTargetId" class="row drag-drop-target">
 					{foreach $queryLabel in $queryLabels}
 						{call LabelNode.render}
+						 	{param id: $queryLabel.id /}
 							{param label: $queryLabel.labelName /}
 							{param left: $queryLabel.left /}
 							{param top: $queryLabel.top /}
@@ -102,6 +103,7 @@
 
 					{foreach $queryRelation in $queryRelations}
 						{call RelationNode.render}
+							{param id: $queryRelation.id /}
 							{param label: $queryRelation.labelName /}
 							{param left: $queryRelation.left /}
 							{param top: $queryRelation.top /}

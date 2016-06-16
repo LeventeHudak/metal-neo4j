@@ -115,13 +115,6 @@ h3 {
   margin: 3px;
 }
 
-.handle {
-  user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-}
-
 .modal-content {
   margin-left: auto;
   margin-right: auto;
@@ -144,11 +137,6 @@ h3 {
   linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px);
   background-size:100px 100px, 100px 100px, 20px 20px, 20px 20px;
   background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px
-}
-
-.query-element-drag {
-  position: absolute;
-  background-color: white;
 }
 
 .card {
