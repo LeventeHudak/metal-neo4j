@@ -14,6 +14,10 @@
   input {
     color: white;
   }
+
+  input:focus {
+    color: white;
+  }
 }
 
 .metal-label-node {
