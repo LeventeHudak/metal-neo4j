@@ -97,56 +97,59 @@ class MetalNeo4j extends Component {
 
 	onInitalizeGraphEventHandler() {
 		let app = this;
+		if (this.initalized_ !== true) {
+			// Get all relation types
+			this.runQuery('match ()-[r]-() return distinct type(r)').then(result => {
+				let relations = [];
 
-		// Get all relation types
-		this.runQuery('match ()-[r]-() return distinct type(r)').then(result => {
-			let relations = [];
-
-			for (let i = 0; i < result.records.length; i++) {
-				relations.push(result.records[i]._fields[0]);
-			}
-
-			app.relations = relations;
-		}).catch(err => app.handleQueryError_(err));
-
-		// Get all labels and label properties
-		this.runQuery('match (n) return distinct labels(n)').then(result => {
-			let labels = [];
-
-			for (let i = 0; i < result.records.length; i++) {
-				let label = result.records[i]._fields[0][0];
-				let labelProperties = new Set();
-
-				labels.push(label);
-
-				app.runQuery('match (n:' + label + ') return distinct keys(n)').then(result => {
-					for (let x = 0; x < result.records.length; x++) {
-						for (let y = 0; y < result.records[x]._fields[0].length; y++) {
-							labelProperties.add(result.records[x]._fields[0][y]);
-						}
-					}
-
-					app.labelProperties_.set(label, Array.from(labelProperties));
-				}).catch(err => app.handleQueryError_(err));
-			}
-
-			app.labels = labels;
-		}).catch(err => app.handleQueryError_(err));
-
-		// Get all keys
-		this.runQuery('match (n) return distinct keys(n)').then(result => {
-			let keys = new Set();
-
-			for (let i = 0; i < result.records.length; i++) {
-				for (let x = 0; x < result.records[i]._fields[0].length; x++) {
-					keys.add(result.records[i]._fields[0][x]);
+				for (let i = 0; i < result.records.length; i++) {
+					relations.push(result.records[i]._fields[0]);
 				}
-			}
 
-			let keysArray = Array.from(keys);
+				app.relations = relations;
+			}).catch(err => app.handleQueryError_(err));
 
-			app.keys = keysArray;
-		}).catch(err => app.handleQueryError_(err));
+			// Get all labels and label properties
+			this.runQuery('match (n) return distinct labels(n)').then(result => {
+				let labels = [];
+
+				for (let i = 0; i < result.records.length; i++) {
+					let label = result.records[i]._fields[0][0];
+					let labelProperties = new Set();
+
+					labels.push(label);
+
+					app.runQuery('match (n:' + label + ') return distinct keys(n)').then(result => {
+						for (let x = 0; x < result.records.length; x++) {
+							for (let y = 0; y < result.records[x]._fields[0].length; y++) {
+								labelProperties.add(result.records[x]._fields[0][y]);
+							}
+						}
+
+						app.labelProperties_.set(label, Array.from(labelProperties));
+					}).catch(err => app.handleQueryError_(err));
+				}
+
+				app.labels = labels;
+			}).catch(err => app.handleQueryError_(err));
+
+			// Get all keys
+			this.runQuery('match (n) return distinct keys(n)').then(result => {
+				let keys = new Set();
+
+				for (let i = 0; i < result.records.length; i++) {
+					for (let x = 0; x < result.records[i]._fields[0].length; x++) {
+						keys.add(result.records[i]._fields[0][x]);
+					}
+				}
+
+				let keysArray = Array.from(keys);
+
+				app.keys = keysArray;
+			}).catch(err => app.handleQueryError_(err));
+
+			this.initalized_ = true;
+		}
 	}
 
 	handleDragDrop_(data, event) {
