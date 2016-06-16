@@ -52,7 +52,7 @@ class MetalNeo4j extends Component {
 
 		String.prototype.format = function() {
 			var content = this;
-			for (var i=0; i < arguments.length; i++) {
+			for (var i = 0; i < arguments.length; i++) {
 				var replacement = '{' + i + '}';
 				content = content.replace(replacement, arguments[i]);
 			}
@@ -189,7 +189,7 @@ class MetalNeo4j extends Component {
 		let whereCriteriaPattern = 'WHERE {0}';
 
 		for (let i = 0; i < cards.length; i++) {
-      let card = cards[i];
+			let card = cards[i];
 
 			let cardDataLabel = card.getAttribute('data-label');
 			let matchCypher = singleMatchCypherPattern.format(cardDataLabel);
@@ -199,7 +199,7 @@ class MetalNeo4j extends Component {
 			let cardInputCypher = '';
 
 			for (let x = 0; x < cardInputs.length; x++) {
-        let input = cardInputs[x];
+				let input = cardInputs[x];
 
 				let label = input.getAttribute('data-label');
 
@@ -237,7 +237,7 @@ class MetalNeo4j extends Component {
 			}
 
 			cypherQuery += matchCypher;
-    }
+		}
 
 		this.runQuery(cypherQuery).then(event => {
 			console.log(event);
