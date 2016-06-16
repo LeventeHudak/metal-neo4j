@@ -33,6 +33,8 @@ var iattr = IncrementalDom.attr;
 
 var $templateAlias1 = Soy.getTemplate('LabelNode.incrementaldom', 'render');
 
+var $templateAlias2 = Soy.getTemplate('RelationNode.incrementaldom', 'render');
+
 
 /**
  * @param {Object<string, *>=} opt_data
@@ -87,7 +89,7 @@ function $render(opt_data, opt_ignored, opt_ijData) {
               'data-onclick', opt_data.onSubmitEventHandler,
               'href', '#');
             ie_void('span', null, null,
-                'class', 'icon-bolt icon-large');
+                'class', 'icon-play icon-large');
           ie_close('a');
         ie_close('div');
         if (opt_data.labels.length > 0 || opt_data.relations.length > 0 || opt_data.keys.length > 0) {
@@ -179,6 +181,12 @@ function $render(opt_data, opt_ignored, opt_ijData) {
             var queryLabelData45 = queryLabelList45[queryLabelIndex45];
             $templateAlias1({label: queryLabelData45.labelName, left: queryLabelData45.left, top: queryLabelData45.top, properties: queryLabelData45.properties}, null, opt_ijData);
           }
+          var queryRelationList51 = opt_data.queryRelations;
+          var queryRelationListLen51 = queryRelationList51.length;
+          for (var queryRelationIndex51 = 0; queryRelationIndex51 < queryRelationListLen51; queryRelationIndex51++) {
+            var queryRelationData51 = queryRelationList51[queryRelationIndex51];
+            $templateAlias2({label: queryRelationData51.labelName, left: queryRelationData51.left, top: queryRelationData51.top}, null, opt_ijData);
+          }
         ie_close('div');
       ie_close('form');
     ie_close('div');
@@ -189,8 +197,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'MetalNeo4j.render';
 }
 
-exports.render.params = ["keys","labels","onClearQueryBoardEventHandler","onInitalizeGraphEventHandler","onSubmitEventHandler","relations","queryLabels"];
-exports.render.types = {"keys":"any","labels":"any","onClearQueryBoardEventHandler":"any","onInitalizeGraphEventHandler":"any","onSubmitEventHandler":"any","relations":"any","queryLabels":"any"};
+exports.render.params = ["keys","labels","onClearQueryBoardEventHandler","onInitalizeGraphEventHandler","onSubmitEventHandler","relations","queryLabels","queryRelations"];
+exports.render.types = {"keys":"any","labels":"any","onClearQueryBoardEventHandler":"any","onInitalizeGraphEventHandler":"any","onSubmitEventHandler":"any","relations":"any","queryLabels":"any","queryRelations":"any"};
 templates = exports;
 return exports;
 

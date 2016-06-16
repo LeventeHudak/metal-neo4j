@@ -30,7 +30,11 @@
         <div class="divider"></div>
       {/if}
 
-      <button class="btn btn-block btn-primary btn-sm" type="button" data-onclick="{$onShowModalClickEventHandler}">Add criteria</button>
+      <div class="metal-entity-add-criteria-btn" data-onclick="{$onShowModalClickEventHandler}">
+        <span class="icon-plus icon-large"></span>
+      </div>
+
+      //<button class="btn btn-block btn-primary btn-sm" type="button" data-onclick="{$onShowModalClickEventHandler}">Add criteria</button>
 
       {let $headerHtml kind="html"}
         <h4 class="modal-title">Add criteria for {$label}</h4>

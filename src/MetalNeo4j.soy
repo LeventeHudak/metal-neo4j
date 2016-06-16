@@ -9,6 +9,7 @@
  * @param onSubmitEventHandler
  * @param relations
  * @param queryLabels
+ * @param queryRelations
  */
 {template .render}
 	<div class="metal-neo4j">
@@ -37,7 +38,7 @@
 							<span class="icon-refresh icon-large"></span>
 						</a>
 						<a class="control-menu-icon" data-onclick="{$onSubmitEventHandler}" href="#">
-							<span class="icon-bolt icon-large"></span>
+							<span class="icon-play icon-large"></span>
 						</a>
 				</div>
 
@@ -96,6 +97,14 @@
 							{param left: $queryLabel.left /}
 							{param top: $queryLabel.top /}
 							{param properties: $queryLabel.properties /}
+						{/call}
+					{/foreach}
+
+					{foreach $queryRelation in $queryRelations}
+						{call RelationNode.render}
+							{param label: $queryRelation.labelName /}
+							{param left: $queryRelation.left /}
+							{param top: $queryRelation.top /}
 						{/call}
 					{/foreach}
 				</div>

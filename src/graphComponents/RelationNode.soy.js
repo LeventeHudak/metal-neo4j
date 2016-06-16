@@ -40,14 +40,32 @@ var iattr = IncrementalDom.attr;
  * @suppress {checkTypes}
  */
 function $render(opt_data, opt_ignored, opt_ijData) {
+  opt_data = opt_data || {};
+  ie_open('div', null, null,
+      'class', 'metal-relation-node card card-rounded query-element-drag flex-container',
+      'data-label', opt_data.label,
+      'style', 'position: absolute; left: ' + opt_data.left + 'px; top: ' + opt_data.top + 'px;');
+    ie_open('span', null, null,
+        'class', 'circle flex-item-center');
+      itext(' ');
+    ie_close('span');
+    ie_open('h3', null, null,
+        'class', 'handle');
+      itext((goog.asserts.assert((opt_data.label) != null), opt_data.label));
+    ie_close('h3');
+    ie_open('span', null, null,
+        'class', 'circle flex-item-center');
+      itext(' ');
+    ie_close('span');
+  ie_close('div');
 }
 exports.render = $render;
 if (goog.DEBUG) {
   $render.soyTemplateName = 'RelationNode.render';
 }
 
-exports.render.params = [];
-exports.render.types = {};
+exports.render.params = ["label","left","top"];
+exports.render.types = {"label":"any","left":"any","top":"any"};
 templates = exports;
 return exports;
 

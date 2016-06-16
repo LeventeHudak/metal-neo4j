@@ -58,17 +58,17 @@ function $render(opt_data, opt_ignored, opt_ijData) {
         'class', 'divider');
     ie_open('div', null, null,
         'class', 'inline-scroller');
-      var inputList77 = opt_data.inputs;
-      var inputListLen77 = inputList77.length;
-      for (var inputIndex77 = 0; inputIndex77 < inputListLen77; inputIndex77++) {
-        var inputData77 = inputList77[inputIndex77];
+      var inputList83 = opt_data.inputs;
+      var inputListLen83 = inputList83.length;
+      for (var inputIndex83 = 0; inputIndex83 < inputListLen83; inputIndex83++) {
+        var inputData83 = inputList83[inputIndex83];
         ie_open('div', null, null,
             'class', 'form-group');
           ie_open('label');
-            if (inputIndex77 != 0) {
+            if (inputIndex83 != 0) {
               ie_open('span', null, null,
                   'class', 'relation-color');
-                itext((goog.asserts.assert((inputData77.operator) != null), inputData77.operator));
+                itext((goog.asserts.assert((inputData83.operator) != null), inputData83.operator));
               ie_close('span');
               itext(' ');
             } else {
@@ -79,16 +79,16 @@ function $render(opt_data, opt_ignored, opt_ijData) {
               ie_close('span');
               itext(' ');
             }
-            itext((goog.asserts.assert((inputData77.property) != null), inputData77.property));
+            itext((goog.asserts.assert((inputData83.property) != null), inputData83.property));
             itext(' is');
           ie_close('label');
           ie_open('input', null, null,
               'class', 'form-control',
               'type', 'text',
-              'placeholder', inputData77.property + '...',
+              'placeholder', inputData83.property + '...',
               'data-label', opt_data.label,
-              'data-property', inputData77.property,
-              'data-operator', inputData77.operator);
+              'data-property', inputData83.property,
+              'data-operator', inputData83.operator);
           ie_close('input');
         ie_close('div');
       }
@@ -96,20 +96,20 @@ function $render(opt_data, opt_ignored, opt_ijData) {
         ie_void('div', null, null,
             'class', 'divider');
       }
-      ie_open('button', null, null,
-          'class', 'btn btn-block btn-primary btn-sm',
-          'type', 'button',
+      ie_open('div', null, null,
+          'class', 'metal-entity-add-criteria-btn',
           'data-onclick', opt_data.onShowModalClickEventHandler);
-        itext('Add criteria');
-      ie_close('button');
-      var headerHtml__soy85 = function() {
+        ie_void('span', null, null,
+            'class', 'icon-plus icon-large');
+      ie_close('div');
+      var headerHtml__soy91 = function() {
         ie_open('h4', null, null,
             'class', 'modal-title');
           itext('Add criteria for ');
           itext((goog.asserts.assert((opt_data.label) != null), opt_data.label));
         ie_close('h4');
       };
-      var bodyHtml__soy89 = function() {
+      var bodyHtml__soy95 = function() {
         ie_open('div', null, null,
             'class', 'styled-select right-margin');
           ie_open('label');
@@ -132,19 +132,19 @@ function $render(opt_data, opt_ignored, opt_ijData) {
             itext('Property');
           ie_close('label');
           ie_open('select');
-            var propertyList96 = opt_data.properties;
-            var propertyListLen96 = propertyList96.length;
-            for (var propertyIndex96 = 0; propertyIndex96 < propertyListLen96; propertyIndex96++) {
-              var propertyData96 = propertyList96[propertyIndex96];
+            var propertyList102 = opt_data.properties;
+            var propertyListLen102 = propertyList102.length;
+            for (var propertyIndex102 = 0; propertyIndex102 < propertyListLen102; propertyIndex102++) {
+              var propertyData102 = propertyList102[propertyIndex102];
               ie_open('option', null, null,
-                  'value', propertyData96);
-                itext((goog.asserts.assert((propertyData96) != null), propertyData96));
+                  'value', propertyData102);
+                itext((goog.asserts.assert((propertyData102) != null), propertyData102));
               ie_close('option');
             }
           ie_close('select');
         ie_close('div');
       };
-      var footerHtml__soy99 = function() {
+      var footerHtml__soy105 = function() {
         ie_open('button', null, null,
             'class', 'btn btn-primary',
             'type', 'button',
@@ -152,7 +152,7 @@ function $render(opt_data, opt_ignored, opt_ijData) {
           itext('Add criteria');
         ie_close('button');
       };
-      $templateAlias1({autoFocus: false, elementClasses: 'modal-custom-size', header: headerHtml__soy85, body: bodyHtml__soy89, footer: footerHtml__soy99, visible: false, ref: 'modal'}, null, opt_ijData);
+      $templateAlias1({autoFocus: false, elementClasses: 'modal-custom-size', header: headerHtml__soy91, body: bodyHtml__soy95, footer: footerHtml__soy105, visible: false, ref: 'modal'}, null, opt_ijData);
     ie_close('div');
   ie_close('div');
 }

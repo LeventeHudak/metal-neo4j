@@ -150,3 +150,37 @@ h3 {
   position: absolute;
   background-color: white;
 }
+
+.card {
+  background-color: rgba(4, 110, 143, 0.5);
+  border: 2px dashed white;
+  color: white;
+  font-family: 'lato', cursive;
+  font-size: 14px;
+  box-shadow: 0 2px 6px 1px rgba(0, 0, 0, 0.5);
+
+  label {
+    color: white;
+    font-family: 'Bungee', cursive;
+  }
+
+  input {
+    color: white;
+  }
+
+  input:focus {
+    color: white;
+  }
+
+  .metal-entity-add-criteria-btn {
+    float: right;
+
+    span {
+      left: 3px;
+    }
+
+    span:hover {
+      cursor: pointer;
+    }
+  }
+}

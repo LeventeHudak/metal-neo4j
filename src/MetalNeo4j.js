@@ -155,7 +155,7 @@ class MetalNeo4j extends Component {
 
 		let item = data.source;
 		let labelName = item.getAttribute('data-label');
-
+		console.log(labelName);
 		if (this.labels.includes(labelName)) {
 			let queryLabel = {
 				labelName: labelName,
@@ -166,6 +166,17 @@ class MetalNeo4j extends Component {
 
 			this.queryLabels.push(queryLabel);
 			this.queryLabels = this.queryLabels;
+		}
+
+		if (this.relations.includes(labelName)) {
+			let queryRelation = {
+				labelName: labelName,
+				left: data.x,
+				top: data.y
+			};
+
+			this.queryRelations.push(queryRelation);
+			this.queryRelations = this.queryRelations;
 		}
 	}
 
@@ -272,6 +283,11 @@ MetalNeo4j.STATE = {
 	},
 
 	queryLabels: {
+		validator: Array.IsArray,
+		valueFn: () => []
+	},
+
+	queryRelations: {
 		validator: Array.IsArray,
 		valueFn: () => []
 	}

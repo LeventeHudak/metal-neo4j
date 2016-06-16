@@ -1,4 +1,15 @@
 {namespace RelationNode}
 
+/**
+ * This renders the component's whole content.
+ * @param? label
+ * @param? left
+ * @param? top
+ */
 {template .render}
+  <div class="metal-relation-node card card-rounded query-element-drag flex-container" data-label="{$label}" style="position: absolute; left: {$left}px; top: {$top}px;">
+    <span class="circle flex-item-center"> </span>
+    <h3 class="handle">{$label}</h3>
+    <span class="circle flex-item-center"> </span>
+  </div>
 {/template}
