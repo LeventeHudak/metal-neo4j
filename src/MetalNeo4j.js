@@ -8,7 +8,28 @@ import DragDrop from 'metal-drag-drop';
 import dom from 'metal-dom';
 
 class MetalNeo4j extends Component {
-	attached() {
+	created() {
+		// Attaching Neo4j to the instance
+		this.neo4j_ = window.neo4j;
+		this.neo4jDriver_ = this.neo4j_.v1.driver('bolt://localhost', this.neo4j_.v1.auth.basic('neo4j', 'neo4jj'));
+		this.neo4jSession_ = this.neo4jDriver_.session();
+
+		// Attaching vis.js to the instance
+		this.vis_ = window.vis;
+
+		this.labelProperties_ = new Map();
+		this.relationProperties_ = [];
+
+		String.prototype.format = function() {
+			var content = this;
+			for (var i = 0; i < arguments.length; i++) {
+				var replacement = '{' + i + '}';
+				content = content.replace(replacement, arguments[i]);
+			}
+
+			return content;
+		};
+
 		let queryElementsDragDrop = new metal.DragDrop({
 			dragPlaceholder: metal.Drag.Placeholder.CLONE,
 			handles: '.drag-drop-item',
@@ -36,29 +57,6 @@ class MetalNeo4j extends Component {
 				y: 5
 			}
 		});
-	}
-
-	created() {
-		// Attaching Neo4j to the instance
-		this.neo4j_ = window.neo4j;
-		this.neo4jDriver_ = this.neo4j_.v1.driver('bolt://localhost', this.neo4j_.v1.auth.basic('neo4j', 'neo4jj'));
-		this.neo4jSession_ = this.neo4jDriver_.session();
-
-		// Attaching vis.js to the instance
-		this.vis_ = window.vis;
-
-		this.labelProperties_ = new Map();
-		this.relationProperties_ = [];
-
-		String.prototype.format = function() {
-			var content = this;
-			for (var i = 0; i < arguments.length; i++) {
-				var replacement = '{' + i + '}';
-				content = content.replace(replacement, arguments[i]);
-			}
-
-			return content;
-		};
 	}
 
 	// Returns a promise
@@ -179,6 +177,8 @@ class MetalNeo4j extends Component {
 		while (dragDropTarget.firstChild) {
 			dragDropTarget.removeChild(dragDropTarget.firstChild);
 		}
+
+		this.queryLabels = new Array();
 	}
 
 	onSubmitEventHandler(event) {
