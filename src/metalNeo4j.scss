@@ -69,11 +69,6 @@ a.control-menu-icon {
   margin-right: auto;
 }
 
-body.open {
-  padding-left: 320px;
-  overflow: hidden;
-}
-
 html, body, form, .section, #content, .container-fluid, .metal-neo4j {
     height: 100%;
 }
@@ -89,10 +84,6 @@ html, body, form, .section, #content, .container-fluid, .metal-neo4j {
   .card {
     padding: 5px;
   }
-}
-
-.navbar {
-  margin-bottom: 14px;
 }
 
 .metal-graph-entity {
@@ -146,6 +137,13 @@ h3 {
   border-style: dashed;
   border-width: 3px;
   border-color: white;
+
+  background-image: linear-gradient(rgba(255,255,255,.2) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(255,255,255,.2) 1px, transparent 1px),
+  linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px);
+  background-size:100px 100px, 100px 100px, 20px 20px, 20px 20px;
+  background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px
 }
 
 .query-element-drag {
