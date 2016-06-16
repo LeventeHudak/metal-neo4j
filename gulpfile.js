@@ -5,11 +5,8 @@ var path = require('path');
 
 metal.registerTasks({
 	buildSrc: ['src/**/*.js'],
-	// cssSrc: ['src/**/*.css', 'componentSrc/**/*.css'],
-	// scssSrc: ['src/**/*.scss', 'componentSrc/**/*.scss'],
-	soyDest: function(file) {
-		return path.dirname(file.path);
-	},
+	cssSrc: ['src/**/*.css'],
+	scssSrc: ['src/**/*.scss'],
 	soySrc: ['src/**/*.soy'],
 	bundleCssFileName: 'metalNeo4j.css',
 	bundleFileName: 'metalNeo4j.js',

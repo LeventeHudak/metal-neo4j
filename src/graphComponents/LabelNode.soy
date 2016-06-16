@@ -1,0 +1,73 @@
+{namespace LabelNode}
+
+/**
+ * This renders the component's whole content.
+ * @param? inputs
+ * @param? label
+ * @param? left
+ * @param? top
+ * @param? onAddCriteriaClickEventHandler
+ * @param? onShowModalClickEventHandler
+ * @param? properties
+ */
+{template .render}
+  <div class="metal-label-node card card-rounded query-element-drag" data-label="{$label}" style="position: absolute; left: {$left}px; top: {$top}px;">
+    <div class="card-row card-row-padded card-row-valign-top">
+      <h3 class="handle">{$label}</h3>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="inline-scroller">
+      {foreach $input in $inputs}
+        <div class="form-group">
+          <label>{if index($input) != 0}<span class="relation-color">{$input.operator}</span> {else} <span class="relation-color">WHERE</span> {/if}{$input.property} is</label>
+          <input class="form-control" type="text" placeholder="{$input.property}..." data-label="{$label}" data-property="{$input.property}" data-operator="{$input.operator}">
+        </div>
+      {/foreach}
+
+      {if length($inputs) > 0}
+        <div class="divider"></div>
+      {/if}
+
+      <button class="btn btn-block btn-primary btn-sm" type="button" data-onclick="{$onShowModalClickEventHandler}">Add criteria</button>
+
+      {let $headerHtml kind="html"}
+        <h4 class="modal-title">Add criteria for {$label}</h4>
+      {/let}
+
+      {let $bodyHtml kind="html"}
+        <div class="styled-select right-margin">
+          <label>Relation</label>
+          <select>
+            <option value="AND">AND</option>
+            <option value="OR">OR</option>
+          </select>
+        </div>
+
+        <div class="styled-select">
+          <label>Property</label>
+          <select>
+            {foreach $property in $properties}
+              <option value="{$property}">{$property}</option>
+            {/foreach}
+          </select>
+        </div>
+      {/let}
+
+      {let $footerHtml kind="html"}
+        <button class="btn btn-primary" type="button" data-onclick="{$onAddCriteriaClickEventHandler}">Add criteria</button>
+      {/let}
+
+      {call Modal.render}
+        {param autoFocus: false /}
+        {param elementClasses: 'modal-custom-size' /}
+        {param header: $headerHtml /}
+        {param body: $bodyHtml /}
+        {param footer: $footerHtml /}
+        {param visible: false /}
+        {param ref: 'modal' /}
+      {/call}
+    </div>
+  </div>
+{/template}

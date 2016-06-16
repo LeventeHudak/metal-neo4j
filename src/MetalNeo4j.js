@@ -2,11 +2,42 @@
 
 import templates from './MetalNeo4j.soy';
 import Component from 'metal-component';
+import core from 'metal';
 import Soy from 'metal-soy';
 import DragDrop from 'metal-drag-drop';
 import dom from 'metal-dom';
 
 class MetalNeo4j extends Component {
+	attached() {
+		let queryElementsDragDrop = new metal.DragDrop({
+			dragPlaceholder: metal.Drag.Placeholder.CLONE,
+			handles: '.drag-drop-item',
+			sources: '.drag-drop-item',
+			targets: '.drag-drop-target'
+		});
+
+		queryElementsDragDrop.on(metal.DragDrop.Events.END, (data, event) => this.handleDragDrop_(data, event));
+
+		new metal.DragDrop({
+			constrain: '#dragDropTargetId',
+			handles: '.handle',
+			sources: '.query-element-drag',
+			steps: {
+				x: 5,
+				y: 5
+			}
+		});
+
+		new metal.DragDrop({
+			handles: '.handle',
+			sources: '.metal-graph-entity-container',
+			steps: {
+				x: 5,
+				y: 5
+			}
+		});
+	}
+
 	created() {
 		// Attaching Neo4j to the instance
 		this.neo4j_ = window.neo4j;
@@ -48,17 +79,13 @@ class MetalNeo4j extends Component {
 		//     {id: 4, label: 'Node 4'},
 		//     {id: 5, label: 'Node 5'}
 		// ]);
-
-		for (let i = 0; i < this.records_.length; i++) {
-			console.log(this.records_[i]);
-		}
 	}
 
 	handleQueryError_(err) {
 		if (err.fields[0].code === 'Neo.ClientError.Statement.SyntaxError') {
 			console.log(err.fields[0].message);
 
-			this.alert = new metal.Alert({
+			this.alert = new Alert({
 				visible: true,
 				body: err.fields[0].message,
 				elementClasses: 'alert-danger',
@@ -120,195 +147,6 @@ class MetalNeo4j extends Component {
 
 			app.keys = keysArray;
 		}).catch(err => app.handleQueryError_(err));
-
-		let queryElementsDragDrop = new metal.DragDrop({
-			dragPlaceholder: metal.Drag.Placeholder.CLONE,
-			handles: '.drag-drop-item',
-			sources: '.drag-drop-item',
-			targets: '.drag-drop-target'
-		});
-
-		queryElementsDragDrop.on(metal.DragDrop.Events.END, (data, event) => this.handleDragDrop_(data, event));
-
-		new metal.DragDrop({
-			constrain: '#dragDropTargetId',
-			handles: '.handle',
-			sources: '.query-element-drag',
-			steps: {
-				x: 5,
-				y: 5
-			}
-		});
-	}
-
-	createInputElementForProperty(property, labelName, operator) {
-		let inputDiv = document.createElement('div');
-		inputDiv.className = 'form-group';
-
-		let label = document.createElement('label');
-		label.innerText = property;
-
-		let input = document.createElement('input');
-		input.className = 'form-control';
-		input.type = 'text';
-		input.placeholder = property + '...';
-
-		let dataLabel = document.createAttribute('data-label');
-		dataLabel.value = labelName;
-
-		let dataProperty = document.createAttribute('data-property');
-		dataProperty.value = property;
-
-		let dataOperator = document.createAttribute('data-operator');
-		dataOperator.value = operator;
-
-		input.setAttributeNode(dataLabel);
-		input.setAttributeNode(dataProperty);
-		input.setAttributeNode(dataOperator);
-
-		inputDiv.appendChild(label);
-		inputDiv.appendChild(input);
-
-		return inputDiv;
-	}
-
-	createElementForLabel(label) {
-		let properties = this.labelProperties_.get(label);
-
-		let cardDiv = document.createElement('div');
-		cardDiv.className = 'card card-rounded query-element-drag';
-
-		let dataLabel = document.createAttribute('data-label');
-		dataLabel.value = label;
-
-		cardDiv.setAttributeNode(dataLabel);
-
-		let cardRowDiv = document.createElement('div');
-		cardRowDiv.className = 'card-row card-row-padded card-row-valign-top';
-
-		let cardInlineScrollerDiv = document.createElement('div');
-		cardInlineScrollerDiv.className = 'inline-scroller';
-
-		let cardTitle = document.createElement('h3');
-		cardTitle.innerText = label;
-		cardTitle.className = 'handle';
-
-		cardDiv.appendChild(cardRowDiv);
-
-		let divider = document.createElement('div');
-		divider.className = 'divider';
-
-		cardDiv.appendChild(divider);
-
-		cardDiv.appendChild(cardInlineScrollerDiv);
-		cardRowDiv.appendChild(cardTitle);
-
-		let modalId = 'modalId_' + label + '_' + this.createUniqueId();
-
-		let cardAddInputCriteriaBtn = document.createElement('button');
-		cardAddInputCriteriaBtn.className = 'btn btn-block btn-primary btn-sm';
-		cardAddInputCriteriaBtn.innerHTML = 'Add criteria';
-		cardAddInputCriteriaBtn.type = 'button';
-
-		let dataToggle = document.createAttribute('data-toggle');
-		dataToggle.value = 'modal';
-
-		let dataTarget = document.createAttribute('data-target');
-		dataTarget.value = '#' + modalId;
-
-		cardAddInputCriteriaBtn.setAttributeNode(dataToggle);
-		cardAddInputCriteriaBtn.setAttributeNode(dataTarget);
-
-		let divider2 = document.createElement('div');
-		divider2.className = 'divider';
-
-		cardInlineScrollerDiv.appendChild(divider2);
-		cardInlineScrollerDiv.appendChild(cardAddInputCriteriaBtn);
-
-		let modalElement = this.createLabelCriteriaSelectorElement(modalId, properties, label, cardInlineScrollerDiv);
-		cardInlineScrollerDiv.appendChild(modalElement);
-
-		return cardDiv;
-	}
-
-	createUniqueId() {
-		function s4() {
-			return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-		}
-		return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
-	}
-
-	createLabelCriteriaSelectorElement(modalId, properties, labelName, element) {
-		let app = this;
-
-		let fragmentHtmlString = '<div class="fade modal" id="' + modalId + '" role="dialog">' +
-			'<div class="modal-content modal-sm">' +
-			'<div class="modal-header">' +
-			'<button aria-labelledby="Close" class="btn btn-default close" data-dismiss="modal" role="button" type="button">' +
-			'<span class="icon-remove"></span>' +
-			'</button>' +
-			'<button class="btn btn-default modal-primary-action-button visible-xs" type="button">' +
-			'<span class="icon-remove"></span>' +
-			'</button>' +
-			'<h4 class="modal-title">Add Criteria</h4>' +
-			'</div>' +
-
-			'<div class="modal-body">' +
-			'</div>' +
-
-			'<div class="modal-footer">' +
-			'<button class="btn btn-primary" id="' + modalId + '_btn" type="button">Primary</button>' +
-			'<button class="btn btn-link close-modal" data-dismiss="modal" type="button">Close</button>' +
-			'</div>' +
-			'</div>' +
-			'</div>' +
-			'</div>';
-
-		let modalFragment = dom.buildFragment(fragmentHtmlString);
-		let modalBody = modalFragment.querySelector('.modal-body');
-
-		let dropDownFragmentString = '<select id=" ' + modalId + '_select_ANDOR">' +
-			'<option value="AND">AND</option>' +
-			'<option value="OR">OR</option>' +
-			'</select>';
-
-		let dropDownFragment = dom.buildFragment(dropDownFragmentString);
-		modalBody.appendChild(dropDownFragment);
-
-		let propertiesElement = document.createElement('select');
-		propertiesElement.id = modalId + '_select_PROPERTIES';
-
-		for (let i = 0; i < properties.length; i++) {
-			let optionElement = document.createElement('option');
-			optionElement.value = properties[i];
-			optionElement.innerText = properties[i];
-
-			propertiesElement.appendChild(optionElement);
-		}
-
-		modalBody.appendChild(propertiesElement);
-
-		let modalSubmitBtn = modalFragment.querySelector('#' + modalId + '_btn');
-		modalSubmitBtn.addEventListener('click', event => {
-			let modal = document.querySelector('#' + modalId);
-			let selects = modal.querySelectorAll('select');
-
-			let operator = selects[0].value;
-			let property = selects[1].value;
-
-			let numberOfInputs = element.querySelectorAll('input').length;
-			let input = null;
-
-			if (numberOfInputs <= 0) {
-				input = app.createInputElementForProperty(property, labelName, 'NONE');
-			} else {
-				input = app.createInputElementForProperty(property, labelName, operator);
-			}
-
-			element.insertBefore(input, element.firstChild);
-		});
-
-		return modalFragment;
 	}
 
 	handleDragDrop_(data, event) {
@@ -318,13 +156,15 @@ class MetalNeo4j extends Component {
 		let labelName = item.getAttribute('data-label');
 
 		if (this.labels.includes(labelName)) {
-			let element = this.createElementForLabel(labelName);
-			let target = document.querySelector('#dragDropTargetId');
-			target.appendChild(element);
+			let queryLabel = {
+				labelName: labelName,
+				left: data.x,
+				top: data.y,
+				properties: this.labelProperties_.get(labelName)
+			};
 
-			element.style.position = 'absolute';
-			element.style.left = data.x + 'px';
-			element.style.top = data.y + 'px';
+			this.queryLabels.push(queryLabel);
+			this.queryLabels = this.queryLabels;
 		}
 	}
 
@@ -415,27 +255,22 @@ MetalNeo4j.STATE = {
 
 	keys: {
 		validator: Array.isArray,
-		value: () => []
+		valueFn: () => []
 	},
 
 	labels: {
 		validator: Array.isArray,
-		value: () => []
-	},
-
-	records: {
-		validator: Array.isArray,
-		value: () => []
+		valueFn: () => []
 	},
 
 	relations: {
 		validator: Array.isArray,
-		value: () => []
+		valueFn: () => []
 	},
 
-	commands: {
-		validator: Array.isArray,
-		value: []
+	queryLabels: {
+		validator: Array.IsArray,
+		valueFn: () => []
 	}
 };
 

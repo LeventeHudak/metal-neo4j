@@ -4,8 +4,69 @@ $color3: #0090c1; //rgba(0, 144, 193, 100)
 $color4: #183446; //rgba(24, 52, 70, 100)
 $color5: #046e8f; //rgba(4, 110, 143, 100)
 
+.metal-neo4j {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.metal-hr {
+  border-top: 1px solid white;
+  margin-top: 0px;
+}
+
+.metal-toolbox {
+  color: white;
+}
+
+.letterpress {
+  position: fixed;
+  left: 30px;
+  top: 20px;
+
+  color: white;
+  font-family: 'Bungee', cursive;
+  font-size: 30px;
+}
+
+.metal-graph-entity-list {
+  list-style: none;
+}
+
+.metal-graph-entity-container {
+  z-index: 1000;
+  border: 2px solid white;
+  background-color: rgba(4, 110, 143, 0.5);
+  border-radius: 5px;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  position: absolute;
+  width: 310px;
+  top: 70px;
+  left: 30px;
+  font-family: 'Bungee', cursive;
+
+  label {
+    color: white;
+  }
+}
+
+.modal-custom-size .modal-dialog {
+  width: 430px;
+}
+
+.flex-container-margin-bottom {
+  margin-bottom: 20px;
+}
+
 a.control-menu-icon {
+  color: white;
   text-decoration: none;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 body.open {
@@ -34,29 +95,22 @@ html, body, form, .section, #content, .container-fluid, .metal-neo4j {
   margin-bottom: 14px;
 }
 
-.graph-element-card {
+.metal-graph-entity {
+  background-color: rgba(0, 144, 193, 0.5);
+  border: 1px dashed white;
+  color: white;
+  padding: 0 6px 0 6px;
   margin: 2px;
-  user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-
-  h4 {
-    margin-top: 0px;
-    margin-bottom: 0px;
-    padding-top: 0px;
-    padding-bottom: 0px;
-  }
+  font-family: 'Lato', sans-serif;
 }
 
-.graph-element-card:hover {
+.metal-graph-entity:hover {
   cursor: move;
 }
 
 h3:hover {
   cursor: move;
 }
-
 
 h3 {
   margin-top: 0px;
@@ -87,7 +141,7 @@ h3 {
 }
 
 .drag-drop-target {
-  height: 89%;
+  height: 100%;
   background-color: $color3;
   border-style: dashed;
   border-width: 3px;

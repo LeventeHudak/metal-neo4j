@@ -8,72 +8,97 @@
  * @param onInitalizeGraphEventHandler
  * @param onSubmitEventHandler
  * @param relations
+ * @param queryLabels
  */
 {template .render}
 	<div class="metal-neo4j">
-		<nav class="collapse-basic-search navbar navbar-default navbar-no-collapse" id="navbarId">
-			<ul class="nav navbar-nav">
-					<li>
-						<a class="control-menu-icon">
-							<img height="26" src="https://avatars3.githubusercontent.com/u/201120?v=3&s=200"></img>
-						</a>
-					</li>
-					<li class="active">
-						<a class="control-menu-icon" href="#">Metal Neo4j</a>
-					</li>
-					<li>
+		<div class="container-fluid">
+			<div class="letterpress">
+				Neo4j Visual Query Builder
+			</div>
+
+			<div id="errorId"></div>
+
+			<div class="metal-graph-entity-container">
+				<h3 class="handle flex-container metal-toolbox">
+					Toolbox
+				</h3>
+
+				<hr class="metal-hr">
+
+				<p>
+					<label>Controls</label>
+				</p>
+				<div class="flex-container flex-container-margin-bottom">
 						<a class="control-menu-icon" data-onclick="{$onInitalizeGraphEventHandler}" href="#">
 							<span class="icon-tasks icon-large"></span>
 						</a>
-					</li>
-					<li>
 						<a class="control-menu-icon" data-onclick="{$onClearQueryBoardEventHandler}" href="#">
 							<span class="icon-refresh icon-large"></span>
 						</a>
-					</li>
-					<li>
-						<a data-onclick="{$onSubmitEventHandler}" href="#">
+						<a class="control-menu-icon" data-onclick="{$onSubmitEventHandler}" href="#">
 							<span class="icon-bolt icon-large"></span>
 						</a>
-					</li>
-			</ul>
-		</nav>
+				</div>
 
-		<div class="container-fluid">
-			<div id="errorId"></div>
+				{if length($labels) > 0 or length($relations) > 0 or length($keys) > 0}
+					<p>
+						<label>Graph entities</label>
+					</p>
+					<ul class="metal-graph-entity-list">
+						<li>
+							<p>
+								<label>Labels</label>
+							</p>
+							<div class="flex-container flex-container-margin-bottom">
+								{foreach $label in $labels}
+									<div class="drag-drop-item metal-graph-entity" data-label="{$label}">
+										<h6>{$label}</h6>
+									</div>
+								{/foreach}
+							</div>
+						</li>
 
-			<div class="row">
-				<div class="col-md-4 flex-container">
-					{foreach $label in $labels}
-						<div class="card card-rounded drag-drop-item graph-element-card" data-label="{$label}">
-							<div class="card-row card-row-padded card-row-valign-top">
-								<h4>{$label}</h4>
+						<li>
+							<p>
+								<label>Relations</label>
+							</p>
+							<div class="flex-container flex-container-margin-bottom">
+								{foreach $relation in $relations}
+									<div class="drag-drop-item metal-graph-entity" data-label="{$relation}">
+										<h5>{$relation}</h5>
+									</div>
+								{/foreach}
 							</div>
-						</div>
-					{/foreach}
-				</div>
-				<div class="col-md-4 flex-container">
-					{foreach $relation in $relations}
-						<div class="card card-rounded drag-drop-item graph-element-card" data-label="{$relation}">
-							<div class="card-row card-row-padded card-row-valign-top">
-								<h4>{$relation}</h4>
+						</li>
+
+						<li>
+							<p>
+								<label>Properties</label>
+							</p>
+							<div class="flex-container">
+								{foreach $key in $keys}
+									<div class="drag-drop-item metal-graph-entity" data-label="{$key}">
+										<h5>{$key}</h5>
+									</div>
+								{/foreach}
 							</div>
-						</div>
-					{/foreach}
-				</div>
-				<div class="col-md-4 flex-container">
-					{foreach $key in $keys}
-						<div class="card card-rounded drag-drop-item graph-element-card" data-label="{$key}">
-							<div class="card-row card-row-padded card-row-valign-top">
-								<h4>{$key}</h4>
-							</div>
-						</div>
-					{/foreach}
-				</div>
+						</li>
+					</ul>
+				{/if}
 			</div>
 
 			<form data-onsubmit="{$onSubmitEventHandler}" id="queryFormId">
-				<div id="dragDropTargetId" class="row drag-drop-target"></div>
+				<div id="dragDropTargetId" class="row drag-drop-target">
+					{foreach $queryLabel in $queryLabels}
+						{call LabelNode.render}
+							{param label: $queryLabel.labelName /}
+							{param left: $queryLabel.left /}
+							{param top: $queryLabel.top /}
+							{param properties: $queryLabel.properties /}
+						{/call}
+					{/foreach}
+				</div>
 			</form>
 		</div>
 	</div>
