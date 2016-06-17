@@ -54,6 +54,7 @@ class MetalNeo4j extends Component {
 		queryElementsDrag.on(metal.DragDrop.Events.DRAG, (data, event) => this.handleQueryElementsDrag_(data, event));
 
 		new metal.DragDrop({
+			constrain: '#dragDropTargetId',
 			handles: '.handle',
 			sources: '.metal-graph-entity-container',
 			steps: {
