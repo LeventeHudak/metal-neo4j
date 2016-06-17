@@ -47,6 +47,11 @@ function $render(opt_data, opt_ignored, opt_ijData) {
   ie_open('div', null, null,
       'class', 'metal-neo4j');
     ie_open('div', null, null,
+        'class', 'hide loading-overlay');
+      ie_void('div', null, null,
+          'class', 'loading-icon linear loading-icon-lg');
+    ie_close('div');
+    ie_open('div', null, null,
         'class', 'container-fluid');
       ie_open('div', null, null,
           'class', 'letterpress');
@@ -99,7 +104,7 @@ function $render(opt_data, opt_ignored, opt_ijData) {
             ie_close('label');
           ie_close('p');
           ie_open('ul', null, null,
-              'class', 'metal-graph-entity-list');
+              'class', 'metal-graph-entity-list inline-scroller');
             ie_open('li');
               ie_open('p');
                 ie_open('label');

@@ -1,8 +1,10 @@
 'use strict';
 
+import Ajax from 'metal-ajax';
 import templates from './MetalNeo4j.soy';
 import Component from 'metal-component';
 import core from 'metal';
+import MultiMap from 'metal-multimap';
 import Soy from 'metal-soy';
 import DragDrop from 'metal-drag-drop';
 import dom from 'metal-dom';
@@ -88,57 +90,42 @@ class MetalNeo4j extends Component {
 	}
 
 	onInitalizeGraphEventHandler() {
-		let app = this;
+		let self = this;
+
 		if (this.initalized_ !== true) {
-			// Get all relation types
-			this.runQuery('match ()-[r]-() return distinct type(r)').then(result => {
-				let relations = [];
+			dom.toggleClasses(this.element.querySelector('.loading-overlay'), 'hide');
 
-				for (let i = 0; i < result.records.length; i++) {
-					relations.push(result.records[i]._fields[0]);
-				}
+			var headers = new MultiMap();
+			headers.add('Accept', 'application/json; charset=UTF-8');
+			headers.add('Authorization', 'Basic realm="neo4j" bmVvNGo6bmVvNGpq');
 
-				app.relations = relations;
-			}).catch(err => app.handleQueryError_(err));
-
-			// Get all labels and label properties
-			this.runQuery('match (n) return distinct labels(n)').then(result => {
-				let labels = [];
-
-				for (let i = 0; i < result.records.length; i++) {
-					let label = result.records[i]._fields[0][0];
+			Ajax.request('http://localhost:7474/db/data/labels', 'GET', null, headers).then(result => {
+				this.labels = JSON.parse(result.response);
+			}).then(() => {
+				for (let i = 0; i < this.labels.length; i++) {
 					let labelProperties = new Set();
 
-					labels.push(label);
-
-					app.runQuery('match (n:' + label + ') return distinct keys(n)').then(result => {
+					self.runQuery('match (n:' + this.labels[i] + ') return distinct keys(n)').then(result => {
 						for (let x = 0; x < result.records.length; x++) {
 							for (let y = 0; y < result.records[x]._fields[0].length; y++) {
+								console.log(result.records[x]._fields[0][y]);
 								labelProperties.add(result.records[x]._fields[0][y]);
 							}
 						}
 
-						app.labelProperties_.set(label, Array.from(labelProperties));
-					}).catch(err => app.handleQueryError_(err));
+						self.labelProperties_.set(this.labels[i], Array.from(labelProperties));
+						dom.toggleClasses(this.element.querySelector('.loading-overlay'), 'hide');
+					}).catch(err => self.handleQueryError_(err));
 				}
+			});
 
-				app.labels = labels;
-			}).catch(err => app.handleQueryError_(err));
+			Ajax.request('http://localhost:7474/db/data/relationship/types', 'GET', null, headers).then(result => {
+				this.relations = JSON.parse(result.response);
+			});
 
-			// Get all keys
-			this.runQuery('match (n) return distinct keys(n)').then(result => {
-				let keys = new Set();
-
-				for (let i = 0; i < result.records.length; i++) {
-					for (let x = 0; x < result.records[i]._fields[0].length; x++) {
-						keys.add(result.records[i]._fields[0][x]);
-					}
-				}
-
-				let keysArray = Array.from(keys);
-
-				app.keys = keysArray;
-			}).catch(err => app.handleQueryError_(err));
+			Ajax.request('http://localhost:7474/db/data/propertykeys', 'GET', null, headers).then(result => {
+				this.keys = JSON.parse(result.response);
+			});
 
 			this.initalized_ = true;
 		}

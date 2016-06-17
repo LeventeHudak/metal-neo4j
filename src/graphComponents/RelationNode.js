@@ -7,7 +7,7 @@ import Soy from 'metal-soy';
 
 class RelationNode extends Component {
   rendered() {
-    console.log(this.label + '  left: ' + this.left + ' top: ' + this.top);
+    //console.log(this.label + '  left: ' + this.left + ' top: ' + this.top);
   }
 }
 Soy.register(RelationNode, templates);

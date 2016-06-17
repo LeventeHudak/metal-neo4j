@@ -32,8 +32,34 @@ $color5: #046e8f; //rgba(4, 110, 143, 100)
   font-size: 30px;
 }
 
-.metal-graph-entity-list {
+.loading-overlay {
+  box-shadow: inset 0 0 300px #444;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background: rgb(0, 0, 0);
+  opacity: 0.6;
+  z-index: 1001;
+
+  .loading-icon {
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+    position: absolute;
+  }
+}
+
+.metal-graph-entity-list.inline-scroller {
   list-style: none;
+  height: auto;
+  max-height: 400px;
 }
 
 .metal-graph-entity-container {

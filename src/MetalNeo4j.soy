@@ -13,6 +13,10 @@
  */
 {template .render}
 	<div class="metal-neo4j">
+		<div class="hide loading-overlay">
+			<div class="loading-icon linear loading-icon-lg"></div>
+		</div>
+
 		<div class="container-fluid">
 			<div class="letterpress">
 				Neo4j Visual Query Builder
@@ -46,7 +50,7 @@
 					<p>
 						<label>Graph entities</label>
 					</p>
-					<ul class="metal-graph-entity-list">
+					<ul class="metal-graph-entity-list inline-scroller">
 						<li>
 							<p>
 								<label>Labels</label>
