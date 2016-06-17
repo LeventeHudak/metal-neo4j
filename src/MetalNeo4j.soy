@@ -10,6 +10,7 @@
  * @param relations
  * @param queryLabels
  * @param queryRelations
+ * @param queries
  */
 {template .render}
 	<div class="metal-neo4j">
@@ -22,7 +23,13 @@
 				Neo4j Visual Query Builder
 			</div>
 
-			<div id="errorId"></div>
+			<ul class="metal-query-history">
+				{foreach $query in $queries}
+					<li class="metal-query-history-item">
+						{$query}
+					</li>
+				{/foreach}
+			</ul>
 
 			<div class="metal-graph-entity-container">
 				<h3 class="handle flex-container metal-toolbox">

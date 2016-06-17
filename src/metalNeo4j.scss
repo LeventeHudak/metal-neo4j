@@ -13,6 +13,22 @@ $color5: #046e8f; //rgba(4, 110, 143, 100)
   user-select: none;
 }
 
+.metal-query-history {
+  position: absolute;
+  list-style: none;
+  color: white;
+  left: 0px;
+  top: 85%;
+  font-family: 'Lato', sans-serif;
+  height: auto;
+  max-height: 20%;
+  overflow: auto;
+
+  li {
+    opacity: .8;
+  }
+}
+
 .metal-hr {
   border-top: 1px solid white;
   margin-top: 0px;
@@ -56,12 +72,6 @@ $color5: #046e8f; //rgba(4, 110, 143, 100)
   }
 }
 
-.metal-graph-entity-list.inline-scroller {
-  list-style: none;
-  height: auto;
-  max-height: 400px;
-}
-
 .metal-graph-entity-container {
   z-index: 1000;
   border: 2px solid white;
@@ -77,6 +87,12 @@ $color5: #046e8f; //rgba(4, 110, 143, 100)
 
   label {
     color: white;
+  }
+
+  .metal-graph-entity-list.inline-scroller {
+    list-style: none;
+    height: auto;
+    max-height: 300px;
   }
 }
 
@@ -132,9 +148,6 @@ h3:hover {
 h3 {
   margin-top: 0px;
   margin-bottom: 0px;
-
-  padding-top: 20px;
-  padding-bottom: 10px;
 }
 
 .bg-default {

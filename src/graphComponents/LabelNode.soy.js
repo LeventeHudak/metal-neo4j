@@ -49,9 +49,8 @@ function $render(opt_data, opt_ignored, opt_ijData) {
       'data-label', opt_data.label,
       'style', 'position: absolute; left: ' + opt_data.left + 'px; top: ' + opt_data.top + 'px;');
     ie_open('div', null, null,
-        'class', 'card-row card-row-padded card-row-valign-top');
-      ie_open('h3', null, null,
-          'class', 'handle');
+        'class', 'card-row card-row-padded card-row-valign-top handle');
+      ie_open('h3');
         itext((goog.asserts.assert((opt_data.label) != null), opt_data.label));
       ie_close('h3');
     ie_close('div');
@@ -59,17 +58,17 @@ function $render(opt_data, opt_ignored, opt_ijData) {
         'class', 'divider');
     ie_open('div', null, null,
         'class', 'inline-scroller');
-      var inputList87 = opt_data.inputs;
-      var inputListLen87 = inputList87.length;
-      for (var inputIndex87 = 0; inputIndex87 < inputListLen87; inputIndex87++) {
-        var inputData87 = inputList87[inputIndex87];
+      var inputList93 = opt_data.inputs;
+      var inputListLen93 = inputList93.length;
+      for (var inputIndex93 = 0; inputIndex93 < inputListLen93; inputIndex93++) {
+        var inputData93 = inputList93[inputIndex93];
         ie_open('div', null, null,
             'class', 'form-group');
           ie_open('label');
-            if (inputIndex87 != 0) {
+            if (inputIndex93 != 0) {
               ie_open('span', null, null,
                   'class', 'relation-color');
-                itext((goog.asserts.assert((inputData87.operator) != null), inputData87.operator));
+                itext((goog.asserts.assert((inputData93.operator) != null), inputData93.operator));
               ie_close('span');
               itext(' ');
             } else {
@@ -80,16 +79,16 @@ function $render(opt_data, opt_ignored, opt_ijData) {
               ie_close('span');
               itext(' ');
             }
-            itext((goog.asserts.assert((inputData87.property) != null), inputData87.property));
+            itext((goog.asserts.assert((inputData93.property) != null), inputData93.property));
             itext(' is');
           ie_close('label');
           ie_open('input', null, null,
               'class', 'form-control',
               'type', 'text',
-              'placeholder', inputData87.property + '...',
+              'placeholder', inputData93.property + '...',
               'data-label', opt_data.label,
-              'data-property', inputData87.property,
-              'data-operator', inputData87.operator);
+              'data-property', inputData93.property,
+              'data-operator', inputData93.operator);
           ie_close('input');
         ie_close('div');
       }
@@ -103,14 +102,14 @@ function $render(opt_data, opt_ignored, opt_ijData) {
         ie_void('span', null, null,
             'class', 'icon-plus icon-large');
       ie_close('div');
-      var headerHtml__soy95 = function() {
+      var headerHtml__soy101 = function() {
         ie_open('h4', null, null,
             'class', 'modal-title');
           itext('Add criteria for ');
           itext((goog.asserts.assert((opt_data.label) != null), opt_data.label));
         ie_close('h4');
       };
-      var bodyHtml__soy99 = function() {
+      var bodyHtml__soy105 = function() {
         ie_open('div', null, null,
             'class', 'styled-select right-margin');
           ie_open('label');
@@ -133,19 +132,19 @@ function $render(opt_data, opt_ignored, opt_ijData) {
             itext('Property');
           ie_close('label');
           ie_open('select');
-            var propertyList106 = opt_data.properties;
-            var propertyListLen106 = propertyList106.length;
-            for (var propertyIndex106 = 0; propertyIndex106 < propertyListLen106; propertyIndex106++) {
-              var propertyData106 = propertyList106[propertyIndex106];
+            var propertyList112 = opt_data.properties;
+            var propertyListLen112 = propertyList112.length;
+            for (var propertyIndex112 = 0; propertyIndex112 < propertyListLen112; propertyIndex112++) {
+              var propertyData112 = propertyList112[propertyIndex112];
               ie_open('option', null, null,
-                  'value', propertyData106);
-                itext((goog.asserts.assert((propertyData106) != null), propertyData106));
+                  'value', propertyData112);
+                itext((goog.asserts.assert((propertyData112) != null), propertyData112));
               ie_close('option');
             }
           ie_close('select');
         ie_close('div');
       };
-      var footerHtml__soy109 = function() {
+      var footerHtml__soy115 = function() {
         ie_open('button', null, null,
             'class', 'btn btn-primary',
             'type', 'button',
@@ -153,7 +152,7 @@ function $render(opt_data, opt_ignored, opt_ijData) {
           itext('Add criteria');
         ie_close('button');
       };
-      $templateAlias1({autoFocus: false, elementClasses: 'modal-custom-size', header: headerHtml__soy95, body: bodyHtml__soy99, footer: footerHtml__soy109, visible: false, ref: 'modal'}, null, opt_ijData);
+      $templateAlias1({autoFocus: false, elementClasses: 'modal-custom-size', header: headerHtml__soy101, body: bodyHtml__soy105, footer: footerHtml__soy115, visible: false, ref: 'modal'}, null, opt_ijData);
     ie_close('div');
   ie_close('div');
 }

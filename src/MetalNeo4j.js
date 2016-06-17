@@ -108,7 +108,6 @@ class MetalNeo4j extends Component {
 					self.runQuery('match (n:' + this.labels[i] + ') return distinct keys(n)').then(result => {
 						for (let x = 0; x < result.records.length; x++) {
 							for (let y = 0; y < result.records[x]._fields[0].length; y++) {
-								console.log(result.records[x]._fields[0][y]);
 								labelProperties.add(result.records[x]._fields[0][y]);
 							}
 						}
@@ -199,6 +198,7 @@ class MetalNeo4j extends Component {
 
 		this.queryLabels = new Array();
 		this.queryRelations = new Array();
+		this.queries = new Array();
 	}
 
 	onSubmitEventHandler(event) {
@@ -267,6 +267,16 @@ class MetalNeo4j extends Component {
 		});
 
 		console.log('Query: ' + cypherQuery);
+
+		if (this.queries.length > 4) {
+			this.queries.splice(0, 1);
+			this.queries.push(cypherQuery);
+		}
+		else {
+			this.queries.push(cypherQuery);
+		}
+
+		this.queries = this.queries;
 	}
 }
 Soy.register(MetalNeo4j, templates);
@@ -293,6 +303,11 @@ MetalNeo4j.STATE = {
 	},
 
 	queryRelations: {
+		validator: Array.IsArray,
+		valueFn: () => []
+	},
+
+	queries: {
 		validator: Array.IsArray,
 		valueFn: () => []
 	}

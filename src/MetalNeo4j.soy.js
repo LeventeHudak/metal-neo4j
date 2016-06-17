@@ -57,8 +57,18 @@ function $render(opt_data, opt_ignored, opt_ijData) {
           'class', 'letterpress');
         itext('Neo4j Visual Query Builder');
       ie_close('div');
-      ie_void('div', null, null,
-          'id', 'errorId');
+      ie_open('ul', null, null,
+          'class', 'metal-query-history');
+        var queryList7 = opt_data.queries;
+        var queryListLen7 = queryList7.length;
+        for (var queryIndex7 = 0; queryIndex7 < queryListLen7; queryIndex7++) {
+          var queryData7 = queryList7[queryIndex7];
+          ie_open('li', null, null,
+              'class', 'metal-query-history-item');
+            itext((goog.asserts.assert((queryData7) != null), queryData7));
+          ie_close('li');
+        }
+      ie_close('ul');
       ie_open('div', null, null,
           'class', 'metal-graph-entity-container');
         ie_open('h3', null, null,
@@ -113,15 +123,15 @@ function $render(opt_data, opt_ignored, opt_ijData) {
               ie_close('p');
               ie_open('div', null, null,
                   'class', 'flex-container flex-container-margin-bottom');
-                var labelList18 = opt_data.labels;
-                var labelListLen18 = labelList18.length;
-                for (var labelIndex18 = 0; labelIndex18 < labelListLen18; labelIndex18++) {
-                  var labelData18 = labelList18[labelIndex18];
+                var labelList24 = opt_data.labels;
+                var labelListLen24 = labelList24.length;
+                for (var labelIndex24 = 0; labelIndex24 < labelListLen24; labelIndex24++) {
+                  var labelData24 = labelList24[labelIndex24];
                   ie_open('div', null, null,
                       'class', 'drag-drop-item metal-graph-entity',
-                      'data-label', labelData18);
+                      'data-label', labelData24);
                     ie_open('h6');
-                      itext((goog.asserts.assert((labelData18) != null), labelData18));
+                      itext((goog.asserts.assert((labelData24) != null), labelData24));
                     ie_close('h6');
                   ie_close('div');
                 }
@@ -135,15 +145,15 @@ function $render(opt_data, opt_ignored, opt_ijData) {
               ie_close('p');
               ie_open('div', null, null,
                   'class', 'flex-container flex-container-margin-bottom');
-                var relationList26 = opt_data.relations;
-                var relationListLen26 = relationList26.length;
-                for (var relationIndex26 = 0; relationIndex26 < relationListLen26; relationIndex26++) {
-                  var relationData26 = relationList26[relationIndex26];
+                var relationList32 = opt_data.relations;
+                var relationListLen32 = relationList32.length;
+                for (var relationIndex32 = 0; relationIndex32 < relationListLen32; relationIndex32++) {
+                  var relationData32 = relationList32[relationIndex32];
                   ie_open('div', null, null,
                       'class', 'drag-drop-item metal-graph-entity',
-                      'data-label', relationData26);
+                      'data-label', relationData32);
                     ie_open('h5');
-                      itext((goog.asserts.assert((relationData26) != null), relationData26));
+                      itext((goog.asserts.assert((relationData32) != null), relationData32));
                     ie_close('h5');
                   ie_close('div');
                 }
@@ -157,15 +167,15 @@ function $render(opt_data, opt_ignored, opt_ijData) {
               ie_close('p');
               ie_open('div', null, null,
                   'class', 'flex-container');
-                var keyList34 = opt_data.keys;
-                var keyListLen34 = keyList34.length;
-                for (var keyIndex34 = 0; keyIndex34 < keyListLen34; keyIndex34++) {
-                  var keyData34 = keyList34[keyIndex34];
+                var keyList40 = opt_data.keys;
+                var keyListLen40 = keyList40.length;
+                for (var keyIndex40 = 0; keyIndex40 < keyListLen40; keyIndex40++) {
+                  var keyData40 = keyList40[keyIndex40];
                   ie_open('div', null, null,
                       'class', 'drag-drop-item metal-graph-entity',
-                      'data-label', keyData34);
+                      'data-label', keyData40);
                     ie_open('h5');
-                      itext((goog.asserts.assert((keyData34) != null), keyData34));
+                      itext((goog.asserts.assert((keyData40) != null), keyData40));
                     ie_close('h5');
                   ie_close('div');
                 }
@@ -180,17 +190,17 @@ function $render(opt_data, opt_ignored, opt_ijData) {
         ie_open('div', null, null,
             'id', 'dragDropTargetId',
             'class', 'row drag-drop-target');
-          var queryLabelList46 = opt_data.queryLabels;
-          var queryLabelListLen46 = queryLabelList46.length;
-          for (var queryLabelIndex46 = 0; queryLabelIndex46 < queryLabelListLen46; queryLabelIndex46++) {
-            var queryLabelData46 = queryLabelList46[queryLabelIndex46];
-            $templateAlias1({id: queryLabelData46.id, label: queryLabelData46.labelName, left: queryLabelData46.left, top: queryLabelData46.top, properties: queryLabelData46.properties}, null, opt_ijData);
+          var queryLabelList52 = opt_data.queryLabels;
+          var queryLabelListLen52 = queryLabelList52.length;
+          for (var queryLabelIndex52 = 0; queryLabelIndex52 < queryLabelListLen52; queryLabelIndex52++) {
+            var queryLabelData52 = queryLabelList52[queryLabelIndex52];
+            $templateAlias1({id: queryLabelData52.id, label: queryLabelData52.labelName, left: queryLabelData52.left, top: queryLabelData52.top, properties: queryLabelData52.properties}, null, opt_ijData);
           }
-          var queryRelationList53 = opt_data.queryRelations;
-          var queryRelationListLen53 = queryRelationList53.length;
-          for (var queryRelationIndex53 = 0; queryRelationIndex53 < queryRelationListLen53; queryRelationIndex53++) {
-            var queryRelationData53 = queryRelationList53[queryRelationIndex53];
-            $templateAlias2({id: queryRelationData53.id, label: queryRelationData53.labelName, left: queryRelationData53.left, top: queryRelationData53.top}, null, opt_ijData);
+          var queryRelationList59 = opt_data.queryRelations;
+          var queryRelationListLen59 = queryRelationList59.length;
+          for (var queryRelationIndex59 = 0; queryRelationIndex59 < queryRelationListLen59; queryRelationIndex59++) {
+            var queryRelationData59 = queryRelationList59[queryRelationIndex59];
+            $templateAlias2({id: queryRelationData59.id, label: queryRelationData59.labelName, left: queryRelationData59.left, top: queryRelationData59.top}, null, opt_ijData);
           }
         ie_close('div');
       ie_close('form');
@@ -202,8 +212,8 @@ if (goog.DEBUG) {
   $render.soyTemplateName = 'MetalNeo4j.render';
 }
 
-exports.render.params = ["keys","labels","onClearQueryBoardEventHandler","onInitalizeGraphEventHandler","onSubmitEventHandler","relations","queryLabels","queryRelations"];
-exports.render.types = {"keys":"any","labels":"any","onClearQueryBoardEventHandler":"any","onInitalizeGraphEventHandler":"any","onSubmitEventHandler":"any","relations":"any","queryLabels":"any","queryRelations":"any"};
+exports.render.params = ["keys","labels","onClearQueryBoardEventHandler","onInitalizeGraphEventHandler","onSubmitEventHandler","relations","queryLabels","queryRelations","queries"];
+exports.render.types = {"keys":"any","labels":"any","onClearQueryBoardEventHandler":"any","onInitalizeGraphEventHandler":"any","onSubmitEventHandler":"any","relations":"any","queryLabels":"any","queryRelations":"any","queries":"any"};
 templates = exports;
 return exports;
 
