@@ -28,6 +28,7 @@
 		"metal-drag-drop": "^1.0.0-rc.2",
 		"metal-modal": "^1.0.0-rc.4",
 		"metal-multimap": "^1.0.0-rc.1",
+		"metal-position": "^1.0.0-rc.2",
 		"metal-soy": "^1.0.0-rc.11",
 		"neo4j-driver": "^1.0.1",
 		"vis": "^4.16.1"

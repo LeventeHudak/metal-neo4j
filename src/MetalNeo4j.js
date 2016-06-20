@@ -8,16 +8,26 @@ import MultiMap from 'metal-multimap';
 import Soy from 'metal-soy';
 import DragDrop from 'metal-drag-drop';
 import dom from 'metal-dom';
+import Position from 'metal-position';
 
 class MetalNeo4j extends Component {
 	created() {
+		// EXPERIMENTAL GRAPH DISPLAY
+		this.EXPERIMENTAL_ = false;
+
 		// Attaching Neo4j to the instance
 		this.neo4j_ = window.neo4j;
 		this.neo4jDriver_ = this.neo4j_.v1.driver('bolt://localhost', this.neo4j_.v1.auth.basic('neo4j', 'neo4jj'));
 		this.neo4jSession_ = this.neo4jDriver_.session();
 
-		// Attaching vis.js to the instance
-		this.vis_ = window.vis;
+		//Neo4j REST API
+		this.neo4jTxURL_ = 'http://localhost:7474/db/data/transaction/commit';
+		this.neo4jHeaders_ = new MultiMap();
+		this.neo4jHeaders_.add('Accept', 'application/json; charset=UTF-8');
+		this.neo4jHeaders_.add('Authorization', 'Basic realm="neo4j" bmVvNGo6bmVvNGpq');
+		this.neo4jHeaders_.add('Content-Type', 'application/json');
+
+		this.d3_ = window.d3;
 
 		this.labelProperties_ = new Map();
 		this.relationProperties_ = [];
@@ -69,19 +79,142 @@ class MetalNeo4j extends Component {
 		return this.neo4jSession_.run(queryString);
 	}
 
+	idIndex(a, id) {
+		for (var i = 0; i < a.length; i++) {
+			if (a[i].id == id) {
+				return i;
+			}
+		}
+
+		return null;
+	}
+
+	getDrawableDataset(result) {
+		let self = this;
+		let nodes = [],
+		links = [];
+
+		console.log(result.results[0]);
+
+		result.results[0].data.forEach(function(row) {
+			row.graph.nodes.forEach(function(n) {
+				if (self.idIndex(nodes, n.id) == null) {
+					let id = n.id;
+					let label = n.labels[0];
+					let title = core.isDefAndNotNull(n.properties.name) ? n.properties.name : '';
+					//console.log(id + ' ' + label + ' ' + title);
+					nodes.push({
+						id: id,
+						label: label,
+						title: title
+					});
+				}
+			});
+
+			links = links.concat(row.graph.relationships.map(function(r) {
+				console.log(r.startNode + ' ' + r.endNode);
+				return {
+					source: self.idIndex(nodes, r.startNode),
+					target: self.idIndex(nodes, r.endNode),
+					type: r.type
+				};
+			}));
+		});
+
+		//EXPERIMENTAL!!!!!!
+		dom.toggleClasses(this.element.querySelector('.loading-overlay'), 'hide');
+		dom.toggleClasses(this.element.querySelector('#graph'), 'metal-graph');
+		dom.toggleClasses(this.element.querySelector('#metal-neo4j-main-content'), 'metal-graph-display-background');
+
+		// Compute the distinct nodes from the links.
+		links.forEach(function(link) {
+			link.source = nodes[link.source] ||
+			(nodes[link.source] = {
+				name: link.source
+			});
+			link.target = nodes[link.target] ||
+			(nodes[link.target] = {
+				name: link.target
+			});
+			link.value = +link.value;
+		});
+
+		var width = Position.getWidth(this.element.querySelector('#queryFormId')),
+		height = Position.getHeight(this.element.querySelector('#queryFormId'));
+
+		var force = d3.layout.force()
+		.nodes(d3.values(nodes))
+		.links(links)
+		.size([width, height])
+		.linkDistance(40)
+		.charge(-200)
+		.on("tick", tick)
+		.start();
+
+		var svg = d3.select("#graph").append("svg")
+		.attr("width", width)
+		.attr("height", height);
+
+
+		var link = svg.selectAll(".link")
+		.data(force.links())
+		.enter().append("line")
+		.attr("class", "link");
+
+		var node = svg.selectAll(".node")
+		.data(force.nodes())
+		.enter().append("g")
+		.attr("class", "node")
+		.call(force.drag);
+
+		node.append("circle")
+		.attr("r", 8);
+
+		node.append("text")
+		.attr("x", 12)
+		.attr("dy", ".35em")
+		.text(function(d) {
+			console.log(d);
+			return d.title || d.label;
+		});
+
+		function tick() {
+			link
+			.attr("x1", function(d) { return d.source.x; })
+			.attr("y1", function(d) { return d.source.y; })
+			.attr("x2", function(d) { return d.target.x; })
+			.attr("y2", function(d) { return d.target.y; });
+
+			node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+		}
+	}
+
 	disposed() {
 		this.neo4jSession_.close();
 		this.neo4jDriver_.close();
 	}
 
-	drawGraph() {
-		// var nodes = new vis.DataSet([
-		//     {id: 1, label: 'Node 1'},
-		//     {id: 2, label: 'Node 2'},
-		//     {id: 3, label: 'Node 3'},
-		//     {id: 4, label: 'Node 4'},
-		//     {id: 5, label: 'Node 5'}
-		// ]);
+	runCypherOverREST(query, params, cb) {
+		let self = this;
+
+		dom.toggleClasses(this.element.querySelector('.loading-overlay'), 'hide');
+
+		query = 'MATCH path = (n)-[r]->(m) RETURN path';
+		let body2 = {
+			"statements": [{
+				"statement": query,
+				"resultDataContents": ["graph"]
+			}]
+		};
+
+		var body = {
+			query: query,
+			params: {}
+		};
+
+		Ajax.request(this.neo4jTxURL_, 'POST', JSON.stringify(body2), this.neo4jHeaders_).then(result => {
+			self.getDrawableDataset(JSON.parse(result.response));
+		});
 	}
 
 	handleQueryError_(err) {
@@ -94,13 +227,9 @@ class MetalNeo4j extends Component {
 		let self = this;
 
 		if (this.initalized_ !== true) {
-			dom.toggleClasses(this.element.querySelector('.loading-overlay'), 'hide');
+			//dom.toggleClasses(this.element.querySelector('.loading-overlay'), 'hide');
 
-			var headers = new MultiMap();
-			headers.add('Accept', 'application/json; charset=UTF-8');
-			headers.add('Authorization', 'Basic realm="neo4j" bmVvNGo6bmVvNGpq');
-
-			Ajax.request('http://localhost:7474/db/data/labels', 'GET', null, headers).then(result => {
+			Ajax.request('http://localhost:7474/db/data/labels', 'GET', null, this.neo4jHeaders_).then(result => {
 				this.labels = JSON.parse(result.response);
 			}).then(() => {
 				for (let i = 0; i < this.labels.length; i++) {
@@ -114,16 +243,16 @@ class MetalNeo4j extends Component {
 						}
 
 						self.labelProperties_.set(this.labels[i], Array.from(labelProperties));
-						dom.toggleClasses(this.element.querySelector('.loading-overlay'), 'hide');
+						//dom.toggleClasses(this.element.querySelector('.loading-overlay'), 'hide');
 					}).catch(err => self.handleQueryError_(err));
 				}
 			});
 
-			Ajax.request('http://localhost:7474/db/data/relationship/types', 'GET', null, headers).then(result => {
+			Ajax.request('http://localhost:7474/db/data/relationship/types', 'GET', null, this.neo4jHeaders_).then(result => {
 				this.relations = JSON.parse(result.response);
 			});
 
-			Ajax.request('http://localhost:7474/db/data/propertykeys', 'GET', null, headers).then(result => {
+			Ajax.request('http://localhost:7474/db/data/propertykeys', 'GET', null, this.neo4jHeaders_).then(result => {
 				this.keys = JSON.parse(result.response);
 			});
 
@@ -142,17 +271,15 @@ class MetalNeo4j extends Component {
 					this.queryLabels[i].top = data.y;
 				}
 			}
-		}
-		else if (dom.hasClass(item, 'metal-relation-node')) {
+		} else if (dom.hasClass(item, 'metal-relation-node')) {
 			for (let i = 0; i < this.queryRelations.length; i++) {
 				if (this.queryRelations[i].id == id) {
 					this.queryRelations[i].left = data.x;
 					this.queryRelations[i].top = data.y;
 				}
 			}
-		}
-		else {
-			//TODO for properties maybe
+		} else {
+			//TODO Properties?
 		}
 	}
 
@@ -173,9 +300,7 @@ class MetalNeo4j extends Component {
 
 			this.queryLabels.push(queryLabel);
 			this.queryLabels = this.queryLabels;
-		}
-
-		else if (this.relations.includes(labelName)) {
+		} else if (this.relations.includes(labelName)) {
 			let queryRelation = {
 				id: core.getUid(),
 				labelName: labelName,
@@ -263,17 +388,21 @@ class MetalNeo4j extends Component {
 			cypherQuery += matchCypher;
 		}
 
-		this.runQuery(cypherQuery).then(event => {
-			console.log(event);
-		});
+		if (this.EXPERIMENTAL_) {
+			this.runCypherOverREST(cypherQuery);
+		}
+		else {
+			this.runQuery(cypherQuery).then(event => {
+				console.log(event);
+			});
+		}
 
 		console.log('Query: ' + cypherQuery);
 
 		if (this.queries.length > 4) {
 			this.queries.splice(0, 1);
 			this.queries.push(cypherQuery);
-		}
-		else {
+		} else {
 			this.queries.push(cypherQuery);
 		}
 
@@ -315,3 +444,9 @@ MetalNeo4j.STATE = {
 };
 
 export default MetalNeo4j;
+
+//TODO Be able to delete single entities from the query board
+//TODO Clean up css
+//TODO Clean up code
+//TODO Be able to connect relations with labels on the UI
+//TODO neo4j driver: .run( "" ).subscribe({onNext: function()});

@@ -4,6 +4,27 @@ $color3: #0090c1; //rgba(0, 144, 193, 100)
 $color4: #183446; //rgba(24, 52, 70, 100)
 $color5: #046e8f; //rgba(4, 110, 143, 100)
 
+.metal-graph {
+  z-index: 1002;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  position: absolute;
+}
+
+.metal-graph-display-background {
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  -webkit-filter: blur(7px);
+  -moz-filter: blur(7px);
+  -o-filter: blur(7px);
+  -ms-filter: blur(7px);
+  filter: blur(7px);
+}
+
 .metal-neo4j {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -14,6 +35,7 @@ $color5: #046e8f; //rgba(4, 110, 143, 100)
 }
 
 .metal-query-history {
+  cursor: default;
   position: absolute;
   list-style: none;
   color: white;
@@ -204,12 +226,12 @@ h3 {
   .metal-entity-add-criteria-btn {
     float: right;
 
-    span {
-      left: 3px;
-    }
-
     span:hover {
       cursor: pointer;
     }
+  }
+
+  .divider {
+    margin-top: 0px;
   }
 }

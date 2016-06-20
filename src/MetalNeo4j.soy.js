@@ -46,12 +46,15 @@ var $templateAlias2 = Soy.getTemplate('RelationNode.incrementaldom', 'render');
 function $render(opt_data, opt_ignored, opt_ijData) {
   ie_open('div', null, null,
       'class', 'metal-neo4j');
+    ie_void('div', null, null,
+        'id', 'graph');
     ie_open('div', null, null,
         'class', 'hide loading-overlay');
       ie_void('div', null, null,
           'class', 'loading-icon linear loading-icon-lg');
     ie_close('div');
     ie_open('div', null, null,
+        'id', 'metal-neo4j-main-content',
         'class', 'container-fluid');
       ie_open('div', null, null,
           'class', 'letterpress');
